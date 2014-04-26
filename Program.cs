@@ -14,9 +14,10 @@ namespace DwarvenRealms
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-
+            //Application.EnableVisualStyles();
+            //Application.SetCompatibleTextRenderingDefault(false);
+            MapCrafter mapCrafter = new MapCrafter();
+            mapCrafter.simpleWriteTest();
         }
     }
 }

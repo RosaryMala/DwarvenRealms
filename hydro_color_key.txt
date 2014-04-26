@@ -1,0 +1,10 @@
+brook (0,255,255)
+stream (0,224,255)
+minor river (0,192,255) 7 tiles wide
+river (0,160,255) 18 tiles wide
+major river (0,128,255)
+mountain (255,255,192)
+lake (0,96,255)
+land (128,64,32)
+ocean (0,64,255)
+river/ocean (0,112,255)

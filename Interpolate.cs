@@ -17,12 +17,12 @@ namespace DwarvenRealms
         /// <param name="y2">Second Point</param>
         /// <param name="mu">Desired location between the two points.</param>
         /// <returns>The height at location mu</returns>
-        static double LinearInterpolate(double y1, double y2, double mu)
+        public static double LinearInterpolate(double y1, double y2, double mu)
         {
             return (y1 * (1 - mu) + y2 * mu);
         }
 
-        static double CosineInterpolate(double y1, double y2, double mu)
+        public static double CosineInterpolate(double y1, double y2, double mu)
         {
             double mu2;
 
@@ -30,7 +30,7 @@ namespace DwarvenRealms
             return (y1 * (1 - mu2) + y2 * mu2);
         }
 
-        static double CubicInterpolate(double y0, double y1, double y2, double y3, double mu)
+        public static double CubicInterpolate(double y0, double y1, double y2, double y3, double mu)
         {
             double a0, a1, a2, a3, mu2;
 
@@ -43,7 +43,7 @@ namespace DwarvenRealms
             return (a0 * mu * mu2 + a1 * mu2 + a2 * mu + a3);
         }
 
-        static double CatmullRomInterpolate(double y0, double y1, double y2, double y3, double mu)
+        public static double CatmullRomInterpolate(double y0, double y1, double y2, double y3, double mu)
         {
             double a0, a1, a2, a3, mu2;
 
@@ -60,15 +60,15 @@ namespace DwarvenRealms
         /// <summary>
         /// Much like cubic interpolation, but has control over sharpness, using tention and bias controls.
         /// </summary>
-        /// <param name="y0"></param>
-        /// <param name="y1"></param>
-        /// <param name="y2"></param>
-        /// <param name="y3"></param>
-        /// <param name="mu"></param>
+        /// <param name="y0">point before the first, for normals.</param>
+        /// <param name="y1">first point</param>
+        /// <param name="y2">second point</param>
+        /// <param name="y3">point after the second, for normals.</param>
+        /// <param name="mu">Desired location between the two points.</param>
         /// <param name="tension">1 is high, 0 normal, -1 is low</param>
         /// <param name="bias">Bias: 0 is even, positive is towards first segment, negative towards the other</param>
-        /// <returns></returns>
-        static double HermiteInterpolate(double y0, double y1, double y2, double y3, double mu, double tension = 0, double bias = 0)
+        /// <returns>The height at location mu</returns>
+        public static double HermiteInterpolate(double y0, double y1, double y2, double y3, double mu, double tension = 0, double bias = 0)
         {
             double m0, m1, mu2, mu3;
             double a0, a1, a2, a3;
@@ -87,7 +87,7 @@ namespace DwarvenRealms
             return (a0 * y1 + a1 * m0 + a2 * m1 + a3 * y2);
         }
 
-        static double BiLinearInterpolate(double z00, double z01, double z10, double z11, double mux, double muy)
+        public static double BiLinearInterpolate(double z00, double z01, double z10, double z11, double mux, double muy)
         {
             double a0, a1;
 
@@ -96,7 +96,7 @@ namespace DwarvenRealms
             return LinearInterpolate(a0, a1, muy);
         }
 
-        static double BiCosineInterpolate(double z00, double z01, double z10, double z11, double mux, double muy)
+        public static double BiCosineInterpolate(double z00, double z01, double z10, double z11, double mux, double muy)
         {
             double a0, a1;
 
@@ -105,7 +105,7 @@ namespace DwarvenRealms
             return CosineInterpolate(a0, a1, muy);
         }
 
-        static double BiCubicInterpolate(
+        public static double BiCubicInterpolate(
             double z00, double z01, double z02, double z03,
             double z10, double z11, double z12, double z13,
             double z20, double z21, double z22, double z23,
@@ -122,7 +122,7 @@ namespace DwarvenRealms
             return CubicInterpolate(a0, a1, a2, a3, muy);
         }
 
-        static double BiCatmullRomInterpolate(
+        public static double BiCatmullRomInterpolate(
             double z00, double z01, double z02, double z03,
             double z10, double z11, double z12, double z13,
             double z20, double z21, double z22, double z23,
@@ -139,7 +139,7 @@ namespace DwarvenRealms
             return CatmullRomInterpolate(a0, a1, a2, a3, muy);
         }
 
-        static double BiHermiteInterpolate(
+        public static double BiHermiteInterpolate(
             double z00, double z01, double z02, double z03,
             double z10, double z11, double z12, double z13,
             double z20, double z21, double z22, double z23,
