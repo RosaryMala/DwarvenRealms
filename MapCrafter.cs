@@ -37,10 +37,10 @@ namespace DwarvenRealms
             int cropWidth = 320;
             int cropHeight = 320;
 
-            borderWest = 1088;
+            borderWest = 640;
             borderEast = borderWest + cropWidth;
 
-            borderNorth = 1024;
+            borderNorth = 0;
             borderSouth = borderNorth + cropHeight;
 
             tilesPerRegionTile = 4;
@@ -123,8 +123,8 @@ namespace DwarvenRealms
                 {
                     double mux = (mapXMax - mapXMin) * x / 16.0 + mapXMin;
                     double muy = (mapYMax - mapYMin) * z / 16.0 + mapYMin;
-                    int height = (int)currentDwarfMap.getElevation(mux, muy) - 34;
-                    int waterlevel = currentDwarfMap.getWaterbodyLevel((int)Math.Floor(mux - 0.5), (int)Math.Floor(muy - 0.5)) - 34;
+                    int height = (int)currentDwarfMap.getElevation(mux, muy) - 35;
+                    int waterlevel = currentDwarfMap.getWaterbodyLevel((int)Math.Floor(mux - 0.5), (int)Math.Floor(muy - 0.5)) - 35;
                     if (height > maxHeight) maxHeight = height;
                     if (height < minHeight) minHeight = height;
                     int biomeIndex = currentDwarfMap.getBiome((int)Math.Floor(mux - 0.5), (int)Math.Floor(muy - 0.5));
