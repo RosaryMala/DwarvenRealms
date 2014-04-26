@@ -10,6 +10,7 @@ namespace DwarvenRealms
         int mapCenterX, mapCenterY;
         int tilesPerRegionTile;
         int borderNorth, borderSouth, borderEast, borderWest;
+        int shift = -35;
 
         NbtWorld currentWorld;
         DwarfWorldMap currentDwarfMap;
@@ -37,10 +38,10 @@ namespace DwarvenRealms
             int cropWidth = 320;
             int cropHeight = 320;
 
-            borderWest = 640;
+            borderWest = 0;
             borderEast = borderWest + cropWidth;
 
-            borderNorth = 0;
+            borderNorth = 960;
             borderSouth = borderNorth + cropHeight;
 
             tilesPerRegionTile = 4;
@@ -123,8 +124,8 @@ namespace DwarvenRealms
                 {
                     double mux = (mapXMax - mapXMin) * x / 16.0 + mapXMin;
                     double muy = (mapYMax - mapYMin) * z / 16.0 + mapYMin;
-                    int height = (int)currentDwarfMap.getElevation(mux, muy) - 35;
-                    int waterlevel = currentDwarfMap.getWaterbodyLevel((int)Math.Floor(mux - 0.5), (int)Math.Floor(muy - 0.5)) - 35;
+                    int height = (int)currentDwarfMap.getElevation(mux, muy) + shift;
+                    int waterlevel = currentDwarfMap.getWaterbodyLevel((int)Math.Floor(mux - 0.5), (int)Math.Floor(muy - 0.5)) + shift;
                     if (height > maxHeight) maxHeight = height;
                     if (height < minHeight) minHeight = height;
                     int biomeIndex = currentDwarfMap.getBiome((int)Math.Floor(mux - 0.5), (int)Math.Floor(muy - 0.5));
@@ -134,11 +135,32 @@ namespace DwarvenRealms
                     {
                         chunk.Blocks.SetID(x, y, z, BlockType.BEDROCK);
                     }
-                    // Create the rest, according to biome
-                    for (int y = 2; y < height; y++)
+                    if (BiomeList.biomes[biomeIndex].mineCraftBiome == BiomeID.DeepOcean &&  waterlevel <= height )
                     {
-                        if (y >= chunk.Blocks.YDim) break;
-                        chunk.Blocks.SetID(x, y, z, BiomeList.biomes[biomeIndex].getBlockID(height - y, x + (chunk.X * 16), z + (chunk.Z * 16)));
+                        chunk.Biomes.SetBiome(x, z, BiomeType.Beach);
+                        height = 98 + shift;
+                        for(int y = 0; y < height - 4; y++)
+                        {
+                            chunk.Blocks.SetID(x, y, z, BlockType.STONE);
+                        }
+                        for (int y = height - 4; y < height - 3; y++)
+                        {
+                            chunk.Blocks.SetID(x, y, z, BlockType.SANDSTONE);
+                        } 
+                        for (int y = height - 3; y < height; y++)
+                        {
+                            chunk.Blocks.SetID(x, y, z, BlockType.SAND);
+                        }
+
+                    }
+                    else
+                    {
+                        // Create the rest, according to biome
+                        for (int y = 2; y < height; y++)
+                        {
+                            if (y >= chunk.Blocks.YDim) break;
+                            chunk.Blocks.SetID(x, y, z, BiomeList.biomes[biomeIndex].getBlockID(height - y, x + (chunk.X * 16), z + (chunk.Z * 16)));
+                        }
                     }
                     // Create Oceans and lakes
                     for (int y = height; y < waterlevel; y++)
