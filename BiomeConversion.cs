@@ -1,6 +1,5 @@
-﻿using System.Drawing;
-using SimplexNoise;
-using System;
+﻿using System;
+using System.Drawing;
 
 namespace DwarvenRealms
 {

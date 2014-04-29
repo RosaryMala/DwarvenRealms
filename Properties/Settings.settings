@@ -1,7 +1,30 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
-  <Settings />
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="DwarvenRealms.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="mapCenterX" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1032</Value>
+    </Setting>
+    <Setting Name="mapCenterY" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1032</Value>
+    </Setting>
+    <Setting Name="tilesPerRegionTile" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">4</Value>
+    </Setting>
+    <Setting Name="elevationMapPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D:/DwarfFortress/df_34_11_win/world_graphic-el-region2-250-15510.bmp</Value>
+    </Setting>
+    <Setting Name="elevationWaterMapPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D:/DwarfFortress/df_34_11_win/world_graphic-elw-region2-250-15510.bmp</Value>
+    </Setting>
+    <Setting Name="hydrosphereMapPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="outputPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">%appdata%/.minecraft/saves/testing/</Value>
+    </Setting>
+    <Setting Name="biomeMapPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D:/DwarfFortress/df_34_11_win/world_graphic-bm-region2-250-15510.bmp</Value>
+    </Setting>
+  </Settings>
 </SettingsFile>

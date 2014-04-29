@@ -5,6 +5,13 @@ namespace DwarvenRealms
 {
     static class BiomeList
     {
+        public const int brook = 0;
+        public const int stream = 0;
+        public const int minorRiver = 0;
+        public const int river = 0;
+        public const int majorRiver = 0;
+        public const int riverOcean = 0;
+
         public static BiomeConversion[] biomes = 
         {
             new BiomeConversion(0,0,0,255),                         // no biome

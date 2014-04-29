@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace DwarvenRealms
 {
@@ -18,6 +14,7 @@ namespace DwarvenRealms
             //Application.SetCompatibleTextRenderingDefault(false);
             MapCrafter mapCrafter = new MapCrafter();
             mapCrafter.simpleWriteTest();
+            Properties.Settings.Default.Save();
         }
     }
 }

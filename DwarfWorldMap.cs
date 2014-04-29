@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
 
 namespace DwarvenRealms
@@ -12,6 +8,7 @@ namespace DwarvenRealms
         int[,] biomeMap;
         int[,] elevationMap;
         int[,] waterMap;
+        int[,] riverHeightMap;
         Bitmap hydrosphere;
 
         public void loadElevationMap(string path)
@@ -37,6 +34,7 @@ namespace DwarvenRealms
         {
             Bitmap waterBitMap = (Bitmap)Bitmap.FromFile(path);
             waterMap = new int[waterBitMap.Width, waterBitMap.Height];
+            riverHeightMap = new int[waterBitMap.Width, waterBitMap.Height];
             for (int y = 0; y < waterBitMap.Height; y++)
             {
                 for (int x = 0; x < waterBitMap.Width; x++)
@@ -45,9 +43,18 @@ namespace DwarvenRealms
                     if (point.R == 0 && point.G == 0)
                     {
                         waterMap[x, y] = point.B + 25;
+                        riverHeightMap[x, y] = -1;
+                    }
+                    else if (point.R == 0)
+                    {
+                        waterMap[x, y] = -1;
+                        riverHeightMap[x, y] = point.B;
                     }
                     else
+                    {
                         waterMap[x, y] = -1;
+                        riverHeightMap[x, y] = -1;
+                    }
                 }
             }
             Console.WriteLine("Loaded ocean map sized {0}x{1}", waterMap.GetUpperBound(0), waterMap.GetUpperBound(1));
@@ -157,6 +164,18 @@ namespace DwarvenRealms
             if (y > waterMap.GetUpperBound(1))
                 y = waterMap.GetUpperBound(1);
             return waterMap[x, y];
+        }
+        public int getRiverLevel(int x, int y)
+        {
+            if (x < riverHeightMap.GetLowerBound(0))
+                x = riverHeightMap.GetLowerBound(0);
+            if (x > riverHeightMap.GetUpperBound(0))
+                x = riverHeightMap.GetUpperBound(0);
+            if (y < riverHeightMap.GetLowerBound(1))
+                y = riverHeightMap.GetLowerBound(1);
+            if (y > riverHeightMap.GetUpperBound(1))
+                y = riverHeightMap.GetUpperBound(1);
+            return riverHeightMap[x, y];
         }
 
         public int getBiome(int x, int y)

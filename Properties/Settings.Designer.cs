@@ -8,22 +8,114 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DwarvenRealms.Properties
-{
-
-
+namespace DwarvenRealms.Properties {
+    
+    
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "11.0.0.0")]
-    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase
-    {
-
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "12.0.0.0")]
+    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+        
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
-
-        public static Settings Default
-        {
-            get
-            {
+        
+        public static Settings Default {
+            get {
                 return defaultInstance;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1032")]
+        public int mapCenterX {
+            get {
+                return ((int)(this["mapCenterX"]));
+            }
+            set {
+                this["mapCenterX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1032")]
+        public int mapCenterY {
+            get {
+                return ((int)(this["mapCenterY"]));
+            }
+            set {
+                this["mapCenterY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("4")]
+        public int tilesPerRegionTile {
+            get {
+                return ((int)(this["tilesPerRegionTile"]));
+            }
+            set {
+                this["tilesPerRegionTile"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("D:/DwarfFortress/df_34_11_win/world_graphic-el-region2-250-15510.bmp")]
+        public string elevationMapPath {
+            get {
+                return ((string)(this["elevationMapPath"]));
+            }
+            set {
+                this["elevationMapPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("D:/DwarfFortress/df_34_11_win/world_graphic-elw-region2-250-15510.bmp")]
+        public string elevationWaterMapPath {
+            get {
+                return ((string)(this["elevationWaterMapPath"]));
+            }
+            set {
+                this["elevationWaterMapPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string hydrosphereMapPath {
+            get {
+                return ((string)(this["hydrosphereMapPath"]));
+            }
+            set {
+                this["hydrosphereMapPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("%appdata%/.minecraft/saves/testing/")]
+        public string outputPath {
+            get {
+                return ((string)(this["outputPath"]));
+            }
+            set {
+                this["outputPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("D:/DwarfFortress/df_34_11_win/world_graphic-bm-region2-250-15510.bmp")]
+        public string biomeMapPath {
+            get {
+                return ((string)(this["biomeMapPath"]));
+            }
+            set {
+                this["biomeMapPath"] = value;
             }
         }
     }

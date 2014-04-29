@@ -2,13 +2,12 @@
 using Substrate.Core;
 using System;
 using System.Diagnostics;
+using DwarvenRealms.Properties;
 
 namespace DwarvenRealms
 {
     class MapCrafter
     {
-        int mapCenterX, mapCenterY;
-        int tilesPerRegionTile;
         int borderNorth, borderSouth, borderEast, borderWest;
         int shift = -35;
 
@@ -20,12 +19,12 @@ namespace DwarvenRealms
 
         public void simpleWriteTest()
         {
-            currentWorld = AnvilWorld.Create("C:\\Users\\Japa\\AppData\\Roaming\\.minecraft\\saves\\testing\\");
+            currentWorld = AnvilWorld.Create(Settings.Default.outputPath);
 
             currentDwarfMap = new DwarfWorldMap();
-            currentDwarfMap.loadElevationMap("D:\\DwarfFortress\\df_34_11_win\\world_graphic-el-region2-250-15510.bmp");
-            currentDwarfMap.loadWaterMap("D:\\DwarfFortress\\df_34_11_win\\world_graphic-elw-region2-250-15510.bmp");
-            currentDwarfMap.loadBiomeMap("D:\\DwarfFortress\\df_34_11_win\\world_graphic-bm-region2-250-15510.bmp");
+            currentDwarfMap.loadElevationMap(Settings.Default.elevationMapPath);
+            currentDwarfMap.loadWaterMap(Settings.Default.elevationWaterMapPath);
+            currentDwarfMap.loadBiomeMap(Settings.Default.biomeMapPath);
 
             IChunkManager cm = currentWorld.GetChunkManager();
 
@@ -35,25 +34,26 @@ namespace DwarvenRealms
             currentWorld.Level.GameType = GameType.CREATIVE;
             currentWorld.Level.AllowCommands = true;
 
-            int cropWidth = 320;
-            int cropHeight = 320;
+            int cropWidth = 2064;
+            int cropHeight = 2064;
 
             borderWest = 0;
             borderEast = borderWest + cropWidth;
 
-            borderNorth = 960;
+            borderNorth = 0;
             borderSouth = borderNorth + cropHeight;
 
-            tilesPerRegionTile = 4;
-            mapCenterX = (borderWest + borderEast) / 2;
-            mapCenterY = (borderNorth + borderSouth) / 2;
-
+            //FIXME get rid of this junk
+            Settings.Default.tilesPerRegionTile = 8;
+            Settings.Default.mapCenterX = (borderWest + borderEast) / 2;
+            Settings.Default.mapCenterY = (borderNorth + borderSouth) / 2;
+            
             //We have to split up the area we're working on into chunks.
             //We use X and Y because minecraft's coordinate system is just retarded.
-            int chunkStartX = ((borderWest - mapCenterX) * tilesPerRegionTile) / 16;
-            int chunkStartY = ((borderNorth - mapCenterY) * tilesPerRegionTile) / 16;
-            int chunkFinishX = ((borderEast - mapCenterX) * tilesPerRegionTile) / 16;
-            int chunkFinishY = ((borderSouth - mapCenterY) * tilesPerRegionTile) / 16;
+            int chunkStartX = ((borderWest - Settings.Default.mapCenterX) * Settings.Default.tilesPerRegionTile) / 16;
+            int chunkStartY = ((borderNorth - Settings.Default.mapCenterY) * Settings.Default.tilesPerRegionTile) / 16;
+            int chunkFinishX = ((borderEast - Settings.Default.mapCenterX) * Settings.Default.tilesPerRegionTile) / 16;
+            int chunkFinishY = ((borderSouth - Settings.Default.mapCenterY) * Settings.Default.tilesPerRegionTile) / 16;
 
             //int xmin = -20;
             //int xmax = 20;
@@ -80,10 +80,10 @@ namespace DwarvenRealms
                     // of blocks.  Turn it off.
                     chunk.Blocks.AutoLight = false;
 
-                    double xMin = ((xi * 16.0 / (double)tilesPerRegionTile) + mapCenterX);
-                    double xMax = (((xi + 1) * 16.0 / (double)tilesPerRegionTile) + mapCenterX);
-                    double yMin = ((zi * 16.0 / (double)tilesPerRegionTile) + mapCenterY);
-                    double yMax = (((zi + 1) * 16.0 / (double)tilesPerRegionTile) + mapCenterY);
+                    double xMin = ((xi * 16.0 / (double)Settings.Default.tilesPerRegionTile) + Settings.Default.mapCenterX);
+                    double xMax = (((xi + 1) * 16.0 / (double)Settings.Default.tilesPerRegionTile) + Settings.Default.mapCenterX);
+                    double yMin = ((zi * 16.0 / (double)Settings.Default.tilesPerRegionTile) + Settings.Default.mapCenterY);
+                    double yMax = (((zi + 1) * 16.0 / (double)Settings.Default.tilesPerRegionTile) + Settings.Default.mapCenterY);
 
 
                     // Make the terrain
@@ -112,8 +112,6 @@ namespace DwarvenRealms
             // Save all remaining data (including a default level.dat)
             // If we didn't save chunks earlier, they would be saved here
             currentWorld.Save();
-
-
         }
 
         void HeightMapChunk(ChunkRef chunk, double mapXMin, double mapXMax, double mapYMin, double mapYMax)
@@ -125,18 +123,38 @@ namespace DwarvenRealms
                     double mux = (mapXMax - mapXMin) * x / 16.0 + mapXMin;
                     double muy = (mapYMax - mapYMin) * z / 16.0 + mapYMin;
                     int height = (int)currentDwarfMap.getElevation(mux, muy) + shift;
-                    int waterlevel = currentDwarfMap.getWaterbodyLevel((int)Math.Floor(mux - 0.5), (int)Math.Floor(muy - 0.5)) + shift;
+                    int waterLevel = currentDwarfMap.getWaterbodyLevel((int)Math.Floor(mux + 0.5), (int)Math.Floor(muy + 0.5)) + shift;
+                    int riverLevel = currentDwarfMap.getRiverLevel((int)Math.Floor(mux + 0.5), (int)Math.Floor(muy + 0.5)) + shift;
                     if (height > maxHeight) maxHeight = height;
                     if (height < minHeight) minHeight = height;
-                    int biomeIndex = currentDwarfMap.getBiome((int)Math.Floor(mux - 0.5), (int)Math.Floor(muy - 0.5));
+                    int biomeIndex = currentDwarfMap.getBiome((int)Math.Floor(mux + 0.5), (int)Math.Floor(muy + 0.5));
                     chunk.Biomes.SetBiome(x, z, BiomeList.biomes[biomeIndex].mineCraftBiome);
                     //create bedrock
                     for (int y = 0; y < 2; y++)
                     {
                         chunk.Blocks.SetID(x, y, z, BlockType.BEDROCK);
                     }
-                    if (BiomeList.biomes[biomeIndex].mineCraftBiome == BiomeID.DeepOcean &&  waterlevel <= height )
+                    //deal with rivers
+                    if (riverLevel >= 0)
                     {
+                        chunk.Biomes.SetBiome(x, z, BiomeType.River);
+                        height = riverLevel;
+                        for (int y = 0; y < height - 2; y++)
+                        {
+                            chunk.Blocks.SetID(x, y, z, BlockType.STONE);
+                        }
+                        for (int y = height - 2; y < height - 1; y++)
+                        {
+                            chunk.Blocks.SetID(x, y, z, BlockType.GRAVEL);
+                        }
+                        for (int y = height - 1; y < height; y++)
+                        {
+                            chunk.Blocks.SetID(x, y, z, BlockType.WATER);
+                        }                        
+                    }
+                    else if (BiomeList.biomes[biomeIndex].mineCraftBiome == BiomeID.DeepOcean && waterLevel <= height)
+                    {
+                        //make beaches
                         chunk.Biomes.SetBiome(x, z, BiomeType.Beach);
                         height = 98 + shift;
                         for(int y = 0; y < height - 4; y++)
@@ -163,7 +181,7 @@ namespace DwarvenRealms
                         }
                     }
                     // Create Oceans and lakes
-                    for (int y = height; y < waterlevel; y++)
+                    for (int y = height; y < waterLevel; y++)
                     {
                         if (y < 2) continue;
                         if (y >= chunk.Blocks.YDim) break;
