@@ -83,6 +83,50 @@ namespace DwarvenRealms
             return (a0 * y1 + a1 * m0 + a2 * m1 + a3 * y2);
         }
 
+        public static double FritschCarlsonInterpolate(double y0, double y1, double y2, double y3, double mu)
+        {
+            // Get Slopes
+            double m0, m1, m2;
+            m0 = y1 - y0;
+            m1 = y2 - y1;
+            m2 = y3 - y2;
+
+            // Get degree-1 coefficients
+            double c10, c11, c12;
+            c10 = m0;
+            if (m0 * m1 <= 0)
+            {
+                c11 = 0;
+            }
+            else
+            {
+                c11 = 2 / (1 / m0 + 1 / m1);
+            }
+            if (m1 * m2 <= 0)
+            {
+                c12 = 0;
+            }
+            else
+            {
+                c12 = 2 / (1 / m1 + 1 / m2);
+            }
+
+            // Get second and third degree coefficients
+            double c20, c30;
+            c20 = (3 * m0) - (2 * c10) - c11;
+            c30 = c10 + c11 - (2 * m0); 
+            double c21, c31;
+            c21 = (3 * m1) - (2 * c11) - c12;
+            c31 = c11 + c12 - (2 * m1);
+
+            double mu2 = mu * mu;
+            double mu3 = mu2 * mu;
+
+
+            return y1 + c11 * mu + c21 * mu2 + c31 * mu3;
+
+        }
+
         public static double BiLinearInterpolate(double z00, double z01, double z10, double z11, double mux, double muy)
         {
             double a0, a1;
@@ -152,5 +196,22 @@ namespace DwarvenRealms
 
             return HermiteInterpolate(a0, a1, a2, a3, muy, tension, bias);
         }
+        public static double BiFritschCarlsonInterpolate(
+    double z00, double z01, double z02, double z03,
+    double z10, double z11, double z12, double z13,
+    double z20, double z21, double z22, double z23,
+    double z30, double z31, double z32, double z33,
+    double mux, double muy)
+        {
+            double a0, a1, a2, a3;
+
+            a0 = FritschCarlsonInterpolate(z00, z01, z02, z03, mux);
+            a1 = FritschCarlsonInterpolate(z10, z11, z12, z13, mux);
+            a2 = FritschCarlsonInterpolate(z20, z21, z22, z23, mux);
+            a3 = FritschCarlsonInterpolate(z30, z31, z32, z33, mux);
+
+            return FritschCarlsonInterpolate(a0, a1, a2, a3, muy);
+        }
     }
+
 }

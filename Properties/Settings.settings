@@ -3,28 +3,31 @@
   <Profiles />
   <Settings>
     <Setting Name="mapCenterX" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1032</Value>
+      <Value Profile="(Default)">2</Value>
     </Setting>
     <Setting Name="mapCenterY" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1032</Value>
+      <Value Profile="(Default)">2</Value>
     </Setting>
     <Setting Name="tilesPerRegionTile" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">4</Value>
+      <Value Profile="(Default)">8</Value>
     </Setting>
     <Setting Name="elevationMapPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">D:/DwarfFortress/df_34_11_win/world_graphic-el-region2-250-15510.bmp</Value>
+      <Value Profile="(Default)">D:/DwarfFortress/df_34_11_win/world_graphic-el-region1-250-16014.bmp</Value>
     </Setting>
     <Setting Name="elevationWaterMapPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">D:/DwarfFortress/df_34_11_win/world_graphic-elw-region2-250-15510.bmp</Value>
+      <Value Profile="(Default)">D:/DwarfFortress/df_34_11_win/world_graphic-elw-region1-250-16014.bmp</Value>
     </Setting>
     <Setting Name="hydrosphereMapPath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="outputPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">%appdata%/.minecraft/saves/testing/</Value>
+      <Value Profile="(Default)">C:/Users/Japa/AppData/Roaming/.minecraft/saves/interpo/</Value>
     </Setting>
     <Setting Name="biomeMapPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">D:/DwarfFortress/df_34_11_win/world_graphic-bm-region2-250-15510.bmp</Value>
+      <Value Profile="(Default)">D:/DwarfFortress/df_34_11_win/world_graphic-bm-region1-250-16014.bmp</Value>
+    </Setting>
+    <Setting Name="levelName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">SpikeTest</Value>
     </Setting>
   </Settings>
 </SettingsFile>

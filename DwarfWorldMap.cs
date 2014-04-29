@@ -79,9 +79,10 @@ namespace DwarvenRealms
             cosine,
             cubic,
             catmulRom,
-            hermite
+            hermite,
+            fritschCarlson
         }
-        InterpolationChoice interpolationChoice = InterpolationChoice.linear;
+        InterpolationChoice interpolationChoice = InterpolationChoice.fritschCarlson;
         /// <summary>
         /// This function assumes that the loaded heightmap image follows the DF2012 convention of having the lowest elevations shaded blue.
         /// </summary>
@@ -143,6 +144,9 @@ namespace DwarvenRealms
                     return Interpolate.BiCatmullRomInterpolate(z00, z01, z02, z03, z10, z11, z12, z13, z20, z21, z22, z23, z30, z31, z32, z33, mux, muy) + roundingCorrection;
                 case InterpolationChoice.hermite:
                     return Interpolate.BiHermiteInterpolate(z00, z01, z02, z03, z10, z11, z12, z13, z20, z21, z22, z23, z30, z31, z32, z33, mux, muy, 0.75) + roundingCorrection;
+                case InterpolationChoice.fritschCarlson:
+                    return Interpolate.BiFritschCarlsonInterpolate(z00, z01, z02, z03, z10, z11, z12, z13, z20, z21, z22, z23, z30, z31, z32, z33, mux, muy) + roundingCorrection;
+
             }
             return -1.0;
         }

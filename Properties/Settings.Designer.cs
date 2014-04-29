@@ -25,7 +25,7 @@ namespace DwarvenRealms.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1032")]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
         public int mapCenterX {
             get {
                 return ((int)(this["mapCenterX"]));
@@ -37,7 +37,7 @@ namespace DwarvenRealms.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1032")]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
         public int mapCenterY {
             get {
                 return ((int)(this["mapCenterY"]));
@@ -49,7 +49,7 @@ namespace DwarvenRealms.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("4")]
+        [global::System.Configuration.DefaultSettingValueAttribute("8")]
         public int tilesPerRegionTile {
             get {
                 return ((int)(this["tilesPerRegionTile"]));
@@ -61,7 +61,7 @@ namespace DwarvenRealms.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("D:/DwarfFortress/df_34_11_win/world_graphic-el-region2-250-15510.bmp")]
+        [global::System.Configuration.DefaultSettingValueAttribute("D:/DwarfFortress/df_34_11_win/world_graphic-el-region1-250-16014.bmp")]
         public string elevationMapPath {
             get {
                 return ((string)(this["elevationMapPath"]));
@@ -73,7 +73,7 @@ namespace DwarvenRealms.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("D:/DwarfFortress/df_34_11_win/world_graphic-elw-region2-250-15510.bmp")]
+        [global::System.Configuration.DefaultSettingValueAttribute("D:/DwarfFortress/df_34_11_win/world_graphic-elw-region1-250-16014.bmp")]
         public string elevationWaterMapPath {
             get {
                 return ((string)(this["elevationWaterMapPath"]));
@@ -97,7 +97,7 @@ namespace DwarvenRealms.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("%appdata%/.minecraft/saves/testing/")]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:/Users/Japa/AppData/Roaming/.minecraft/saves/interpo/")]
         public string outputPath {
             get {
                 return ((string)(this["outputPath"]));
@@ -109,13 +109,25 @@ namespace DwarvenRealms.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("D:/DwarfFortress/df_34_11_win/world_graphic-bm-region2-250-15510.bmp")]
+        [global::System.Configuration.DefaultSettingValueAttribute("D:/DwarfFortress/df_34_11_win/world_graphic-bm-region1-250-16014.bmp")]
         public string biomeMapPath {
             get {
                 return ((string)(this["biomeMapPath"]));
             }
             set {
                 this["biomeMapPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("SpikeTest")]
+        public string levelName {
+            get {
+                return ((string)(this["levelName"]));
+            }
+            set {
+                this["levelName"] = value;
             }
         }
     }

@@ -29,13 +29,13 @@ namespace DwarvenRealms
             IChunkManager cm = currentWorld.GetChunkManager();
 
             // We can set different world parameters
-            currentWorld.Level.LevelName = "Flatlands";
+            currentWorld.Level.LevelName = Settings.Default.levelName ;
             currentWorld.Level.Spawn = new SpawnPoint(20, 255, 20);
             currentWorld.Level.GameType = GameType.CREATIVE;
             currentWorld.Level.AllowCommands = true;
 
-            int cropWidth = 2064;
-            int cropHeight = 2064;
+            int cropWidth = 272;
+            int cropHeight = 272;
 
             borderWest = 0;
             borderEast = borderWest + cropWidth;
@@ -44,7 +44,6 @@ namespace DwarvenRealms
             borderSouth = borderNorth + cropHeight;
 
             //FIXME get rid of this junk
-            Settings.Default.tilesPerRegionTile = 8;
             Settings.Default.mapCenterX = (borderWest + borderEast) / 2;
             Settings.Default.mapCenterY = (borderNorth + borderSouth) / 2;
             
@@ -55,11 +54,7 @@ namespace DwarvenRealms
             int chunkFinishX = ((borderEast - Settings.Default.mapCenterX) * Settings.Default.tilesPerRegionTile) / 16;
             int chunkFinishY = ((borderSouth - Settings.Default.mapCenterY) * Settings.Default.tilesPerRegionTile) / 16;
 
-            //int xmin = -20;
-            //int xmax = 20;
-            //int zmin = -20;
-            //int zmaz = 20;
-            // We'll create chunks at chunk coordinates xmin,zmin to xmax,zmax
+
             Console.WriteLine("Starting conversion now.");
             Stopwatch watch = Stopwatch.StartNew();
             for (int xi = chunkStartX; xi < chunkFinishX; xi++)
