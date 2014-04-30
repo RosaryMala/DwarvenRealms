@@ -92,8 +92,7 @@ namespace DwarvenRealms
             m2 = y3 - y2;
 
             // Get degree-1 coefficients
-            double c10, c11, c12;
-            c10 = m0;
+            double c11, c12;
             if (m0 * m1 <= 0)
             {
                 c11 = 0;
@@ -112,9 +111,6 @@ namespace DwarvenRealms
             }
 
             // Get second and third degree coefficients
-            double c20, c30;
-            c20 = (3 * m0) - (2 * c10) - c11;
-            c30 = c10 + c11 - (2 * m0); 
             double c21, c31;
             c21 = (3 * m1) - (2 * c11) - c12;
             c31 = c11 + c12 - (2 * m1);
