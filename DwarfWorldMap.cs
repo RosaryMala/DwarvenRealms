@@ -9,7 +9,6 @@ namespace DwarvenRealms
         int[,] elevationMap;
         int[,] waterMap;
         int[,] riverHeightMap;
-        Bitmap hydrosphere;
 
         public void loadElevationMap(string path)
         {
@@ -83,23 +82,10 @@ namespace DwarvenRealms
             fritschCarlson
         }
         InterpolationChoice interpolationChoice = InterpolationChoice.fritschCarlson;
-        /// <summary>
-        /// This function assumes that the loaded heightmap image follows the DF2012 convention of having the lowest elevations shaded blue.
-        /// </summary>
-        /// <param name="x">X coordinate</param>
-        /// <param name="y">Y coordinate</param>
-        /// <returns>The elevation at the specified coordinate, or -1 if an error occurs.</returns>
+
         public int getElevation(int x, int y)
         {
-            if (x < elevationMap.GetLowerBound(0))
-                x = elevationMap.GetLowerBound(0);
-            if (x > elevationMap.GetUpperBound(0))
-                x = elevationMap.GetUpperBound(0);
-            if (y < elevationMap.GetLowerBound(1))
-                y = elevationMap.GetLowerBound(1);
-            if (y > elevationMap.GetUpperBound(1))
-                y = elevationMap.GetUpperBound(1);
-            return elevationMap[x, y];
+            return getClampedCoord(elevationMap, x, y);
         }
 
         public double getElevation(double x, double y)
@@ -130,7 +116,7 @@ namespace DwarvenRealms
             double mux = y - y1;
 
             //flat land sometimes gives trouble, so a slight increase can help that.
-            double roundingCorrection = 0.001;
+            double roundingCorrection = 0.5;
 
             switch (interpolationChoice)
             {
@@ -159,44 +145,42 @@ namespace DwarvenRealms
         /// <returns>Water level, if available, or -1</returns>
         public int getWaterbodyLevel(int x, int y)
         {
-            if (x < waterMap.GetLowerBound(0))
-                x = waterMap.GetLowerBound(0);
-            if (x > waterMap.GetUpperBound(0))
-                x = waterMap.GetUpperBound(0);
-            if (y < waterMap.GetLowerBound(1))
-                y = waterMap.GetLowerBound(1);
-            if (y > waterMap.GetUpperBound(1))
-                y = waterMap.GetUpperBound(1);
-            return waterMap[x, y];
+            return getClampedCoord(waterMap, x, y);
         }
         public int getRiverLevel(int x, int y)
         {
-            if (x < riverHeightMap.GetLowerBound(0))
-                x = riverHeightMap.GetLowerBound(0);
-            if (x > riverHeightMap.GetUpperBound(0))
-                x = riverHeightMap.GetUpperBound(0);
-            if (y < riverHeightMap.GetLowerBound(1))
-                y = riverHeightMap.GetLowerBound(1);
-            if (y > riverHeightMap.GetUpperBound(1))
-                y = riverHeightMap.GetUpperBound(1);
-            return riverHeightMap[x, y];
+            return getClampedCoord(riverHeightMap, x, y);
         }
 
         public int getBiome(int x, int y)
         {
-            if (x < biomeMap.GetLowerBound(0))
-                x = biomeMap.GetLowerBound(0);
-            if (x > biomeMap.GetUpperBound(0))
-                x = biomeMap.GetUpperBound(0);
-            if (y < biomeMap.GetLowerBound(1))
-                y = biomeMap.GetLowerBound(1);
-            if (y > biomeMap.GetUpperBound(1))
-                y = biomeMap.GetUpperBound(1);
-            return biomeMap[x, y];
+            return getClampedCoord(biomeMap, x, y);
         }
         public int getBiome(double x, double y)
         {
             return getBiome((int)Math.Floor(x), (int)Math.Floor(y));
+        }
+
+        /// <summary>
+        /// Safely reads the value from an index grid.
+        /// </summary>
+        /// <param name="grid">A two dimensional array of ints to read from</param>
+        /// <param name="x">X coord</param>
+        /// <param name="y">Y coord</param>
+        /// <returns>The value stored at the nearest valid grid cell, or MinValue if the grid is invalid entirely.</returns>
+        int getClampedCoord(int[,] grid, int x, int y)
+        {
+            if (grid == null || grid.Length == 0)
+                return int.MinValue;
+            if (x < grid.GetLowerBound(0))
+                x = grid.GetLowerBound(0);
+            if (x > grid.GetUpperBound(0))
+                x = grid.GetUpperBound(0);
+            if (y < grid.GetLowerBound(1))
+                y = grid.GetLowerBound(1);
+            if (y > grid.GetUpperBound(1))
+                y = grid.GetUpperBound(1);
+            return grid[x, y];
         }
     }
 }
