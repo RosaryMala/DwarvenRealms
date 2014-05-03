@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Forms;
 
 namespace DwarvenRealms
 {
@@ -10,10 +11,9 @@ namespace DwarvenRealms
         [STAThread]
         static void Main()
         {
-            //Application.EnableVisualStyles();
-            //Application.SetCompatibleTextRenderingDefault(false);
-            MapCrafter mapCrafter = new MapCrafter();
-            mapCrafter.simpleWriteTest();
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new MainGui());
             Properties.Settings.Default.Save();
         }
     }

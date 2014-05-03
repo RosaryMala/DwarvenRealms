@@ -8,7 +8,6 @@ namespace DwarvenRealms
 {
     class MapCrafter
     {
-        int borderNorth, borderSouth, borderEast, borderWest;
         int shift = -35;
 
         NbtWorld currentWorld;
@@ -17,49 +16,104 @@ namespace DwarvenRealms
         int maxHeight = -9999;
         int minHeight = 9999;
 
-        public void simpleWriteTest()
+        /// <summary>
+        /// Generates and saves a single minecraft chunk using current settings.
+        /// </summary>
+        /// <param name="xi">X coordinate of the chunk.</param>
+        /// <param name="zi">Y coordinate of the chunk.</param>
+        public void generateSingleChunk(int xi, int zi)
         {
-            currentWorld = AnvilWorld.Create(Settings.Default.outputPath);
+            // This line will create a default empty chunk, and create a
+            // backing region file if necessary (which will immediately be
+            // written to disk)
+            ChunkRef chunk = currentWorld.GetChunkManager().CreateChunk(xi, zi);
 
+            // This will make sure all the necessary things like trees and
+            // ores are generated for us.
+            chunk.IsTerrainPopulated = false;
+
+            // Auto light recalculation is horrifically bad for creating
+            // chunks from scratch, because we're placing thousands
+            // of blocks.  Turn it off.
+            chunk.Blocks.AutoLight = false;
+
+            double xMin = ((xi * 16.0 / (double)Settings.Default.tilesPerRegionTile) + Settings.Default.mapCenterX);
+            double xMax = (((xi + 1) * 16.0 / (double)Settings.Default.tilesPerRegionTile) + Settings.Default.mapCenterX);
+            double yMin = ((zi * 16.0 / (double)Settings.Default.tilesPerRegionTile) + Settings.Default.mapCenterY);
+            double yMax = (((zi + 1) * 16.0 / (double)Settings.Default.tilesPerRegionTile) + Settings.Default.mapCenterY);
+
+
+            // Make the terrain
+            HeightMapChunk(chunk, xMin, xMax, yMin, yMax);
+
+            // Reset and rebuild the lighting for the entire chunk at once
+            chunk.Blocks.RebuildHeightMap();
+            chunk.Blocks.RebuildBlockLight();
+            chunk.Blocks.RebuildSkyLight();
+
+            // Save the chunk to disk so it doesn't hang around in RAM
+            currentWorld.GetChunkManager().Save();
+        }
+
+        public static int getChunkStartX() { return ((Settings.Default.borderWest - Settings.Default.mapCenterX) * Settings.Default.tilesPerRegionTile) / 16; }
+        public static int getChunkStartY() { return ((Settings.Default.borderNorth - Settings.Default.mapCenterY) * Settings.Default.tilesPerRegionTile) / 16; }
+        public static int getChunkFinishX() { return ((Settings.Default.borderEast - Settings.Default.mapCenterX) * Settings.Default.tilesPerRegionTile) / 16; }
+        public static int getChunkFinishY() { return ((Settings.Default.borderSouth - Settings.Default.mapCenterY) * Settings.Default.tilesPerRegionTile) / 16; }
+
+        public void loadDwarfMaps()
+        {
             currentDwarfMap = new DwarfWorldMap();
             currentDwarfMap.loadElevationMap(Settings.Default.elevationMapPath);
             currentDwarfMap.loadWaterMap(Settings.Default.elevationWaterMapPath);
             currentDwarfMap.loadBiomeMap(Settings.Default.biomeMapPath);
+        }
 
-            IChunkManager cm = currentWorld.GetChunkManager();
+        public void initializeMinecraftWorld()
+        {
+            currentWorld = AnvilWorld.Create(Settings.Default.outputPath);
 
             // We can set different world parameters
-            currentWorld.Level.LevelName = Settings.Default.levelName ;
+            currentWorld.Level.LevelName = Settings.Default.levelName;
             currentWorld.Level.Spawn = new SpawnPoint(20, 255, 20);
             currentWorld.Level.GameType = GameType.CREATIVE;
             currentWorld.Level.AllowCommands = true;
+        }
 
-            int cropWidth = 272;
-            int cropHeight = 272;
+        public void saveMinecraftWorld()
+        {
+            // Save all remaining data (including a default level.dat)
+            // If we didn't save chunks earlier, they would be saved here
+            currentWorld.Save();
+        }
 
-            borderWest = 0;
-            borderEast = borderWest + cropWidth;
+        public void simpleWriteTest()
+        {
+            initializeMinecraftWorld();
+            IChunkManager cm = currentWorld.GetChunkManager();
 
-            borderNorth = 0;
-            borderSouth = borderNorth + cropHeight;
+            loadDwarfMaps();
+
+
+
+            int cropWidth = 40;
+            int cropHeight = 40;
+
+            Settings.Default.borderWest = 40;
+            Settings.Default.borderEast = Settings.Default.borderWest + cropWidth;
+
+            Settings.Default.borderNorth = 40;
+            Settings.Default.borderSouth = Settings.Default.borderNorth + cropHeight;
 
             //FIXME get rid of this junk
-            Settings.Default.mapCenterX = (borderWest + borderEast) / 2;
-            Settings.Default.mapCenterY = (borderNorth + borderSouth) / 2;
+            Settings.Default.mapCenterX = (Settings.Default.borderWest + Settings.Default.borderEast) / 2;
+            Settings.Default.mapCenterY = (Settings.Default.borderNorth + Settings.Default.borderSouth) / 2;
             
-            //We have to split up the area we're working on into chunks.
-            //We use X and Y because minecraft's coordinate system is just retarded.
-            int chunkStartX = ((borderWest - Settings.Default.mapCenterX) * Settings.Default.tilesPerRegionTile) / 16;
-            int chunkStartY = ((borderNorth - Settings.Default.mapCenterY) * Settings.Default.tilesPerRegionTile) / 16;
-            int chunkFinishX = ((borderEast - Settings.Default.mapCenterX) * Settings.Default.tilesPerRegionTile) / 16;
-            int chunkFinishY = ((borderSouth - Settings.Default.mapCenterY) * Settings.Default.tilesPerRegionTile) / 16;
-
 
             Console.WriteLine("Starting conversion now.");
             Stopwatch watch = Stopwatch.StartNew();
-            for (int xi = chunkStartX; xi < chunkFinishX; xi++)
+            for (int xi = getChunkStartX(); xi < getChunkFinishX(); xi++)
             {
-                for (int zi = chunkStartY; zi < chunkFinishY; zi++)
+                for (int zi = getChunkStartY(); zi < getChunkFinishY(); zi++)
                 {
                     // This line will create a default empty chunk, and create a
                     // backing region file if necessary (which will immediately be
@@ -92,21 +146,19 @@ namespace DwarvenRealms
                     // Save the chunk to disk so it doesn't hang around in RAM
                     cm.Save();
                 }
-                TimeSpan elapsedTime = watch.Elapsed;
-                int finished = xi - chunkStartX + 1;
-                int left = chunkFinishX - xi - 1;
-                TimeSpan remainingTime = TimeSpan.FromTicks(elapsedTime.Ticks / finished * left);
-                Console.WriteLine("Built Chunk Row {0} of {1}. {2}:{3}:{4} elapsed, {5}:{6}:{7} remaining.",
-                    finished, chunkFinishX - chunkStartX,
-                    elapsedTime.Hours, elapsedTime.Minutes, elapsedTime.Seconds,
-                    remainingTime.Hours, remainingTime.Minutes, remainingTime.Seconds);
-                maxHeight = -9999;
-                minHeight = 9999;
+                //TimeSpan elapsedTime = watch.Elapsed;
+                //int finished = xi - chunkStartX + 1;
+                //int left = chunkFinishX - xi - 1;
+                //TimeSpan remainingTime = TimeSpan.FromTicks(elapsedTime.Ticks / finished * left);
+                //Console.WriteLine("Built Chunk Row {0} of {1}. {2}:{3}:{4} elapsed, {5}:{6}:{7} remaining.",
+                //    finished, chunkFinishX - chunkStartX,
+                //    elapsedTime.Hours, elapsedTime.Minutes, elapsedTime.Seconds,
+                //    remainingTime.Hours, remainingTime.Minutes, remainingTime.Seconds);
+                maxHeight = int.MinValue;
+                minHeight = int.MaxValue;
             }
 
-            // Save all remaining data (including a default level.dat)
-            // If we didn't save chunks earlier, they would be saved here
-            currentWorld.Save();
+            saveMinecraftWorld();
         }
 
         void HeightMapChunk(ChunkRef chunk, double mapXMin, double mapXMax, double mapYMin, double mapYMax)

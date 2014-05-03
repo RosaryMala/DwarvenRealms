@@ -3,10 +3,10 @@
   <Profiles />
   <Settings>
     <Setting Name="mapCenterX" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">2</Value>
+      <Value Profile="(Default)">1032</Value>
     </Setting>
     <Setting Name="mapCenterY" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">2</Value>
+      <Value Profile="(Default)">1032</Value>
     </Setting>
     <Setting Name="tilesPerRegionTile" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">8</Value>
@@ -28,6 +28,18 @@
     </Setting>
     <Setting Name="levelName" Type="System.String" Scope="User">
       <Value Profile="(Default)">SpikeTest</Value>
+    </Setting>
+    <Setting Name="borderNorth" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="borderWest" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="borderEast" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">2064</Value>
+    </Setting>
+    <Setting Name="borderSouth" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">2064</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -73,11 +73,29 @@
     <Compile Include="BiomeList.cs" />
     <Compile Include="BiomeConversion.cs" />
     <Compile Include="DwarfWorldMap.cs" />
+    <Compile Include="AreaSelector.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AreaSelector.Designer.cs">
+      <DependentUpon>AreaSelector.cs</DependentUpon>
+    </Compile>
     <Compile Include="Interpolate.cs" />
+    <Compile Include="MainGui.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainGui.Designer.cs">
+      <DependentUpon>MainGui.cs</DependentUpon>
+    </Compile>
     <Compile Include="MapCrafter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
+    <EmbeddedResource Include="AreaSelector.resx">
+      <DependentUpon>AreaSelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainGui.resx">
+      <DependentUpon>MainGui.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

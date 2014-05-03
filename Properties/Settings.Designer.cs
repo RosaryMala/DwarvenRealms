@@ -25,7 +25,7 @@ namespace DwarvenRealms.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1032")]
         public int mapCenterX {
             get {
                 return ((int)(this["mapCenterX"]));
@@ -37,7 +37,7 @@ namespace DwarvenRealms.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1032")]
         public int mapCenterY {
             get {
                 return ((int)(this["mapCenterY"]));
@@ -128,6 +128,54 @@ namespace DwarvenRealms.Properties {
             }
             set {
                 this["levelName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int borderNorth {
+            get {
+                return ((int)(this["borderNorth"]));
+            }
+            set {
+                this["borderNorth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int borderWest {
+            get {
+                return ((int)(this["borderWest"]));
+            }
+            set {
+                this["borderWest"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2064")]
+        public int borderEast {
+            get {
+                return ((int)(this["borderEast"]));
+            }
+            set {
+                this["borderEast"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2064")]
+        public int borderSouth {
+            get {
+                return ((int)(this["borderSouth"]));
+            }
+            set {
+                this["borderSouth"] = value;
             }
         }
     }

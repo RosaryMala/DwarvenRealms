@@ -182,5 +182,12 @@ namespace DwarvenRealms
                 y = grid.GetUpperBound(1);
             return grid[x, y];
         }
+
+        int getFuzzyCoords(int[,] grid, double x, double y)
+        {
+
+            return int.MinValue;
+        }
+
     }
 }

@@ -193,11 +193,11 @@ namespace DwarvenRealms
             return HermiteInterpolate(a0, a1, a2, a3, muy, tension, bias);
         }
         public static double BiFritschCarlsonInterpolate(
-    double z00, double z01, double z02, double z03,
-    double z10, double z11, double z12, double z13,
-    double z20, double z21, double z22, double z23,
-    double z30, double z31, double z32, double z33,
-    double mux, double muy)
+            double z00, double z01, double z02, double z03,
+            double z10, double z11, double z12, double z13,
+            double z20, double z21, double z22, double z23,
+            double z30, double z31, double z32, double z33,
+            double mux, double muy)
         {
             double a0, a1, a2, a3;
 
