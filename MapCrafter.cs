@@ -170,6 +170,8 @@ namespace DwarvenRealms
                     double mux = (mapXMax - mapXMin) * x / 16.0 + mapXMin;
                     double muy = (mapYMax - mapYMin) * z / 16.0 + mapYMin;
                     int height = (int)currentDwarfMap.getElevation(mux, muy) + shift;
+                    int caveCeiling = currentDwarfMap.getCaveCeiling(mux, muy) + shift;
+                    int caveFloor = currentDwarfMap.getCaveFloor(mux, muy) + shift;
                     int waterLevel = currentDwarfMap.getWaterbodyLevel((int)Math.Floor(mux + 0.5), (int)Math.Floor(muy + 0.5)) + shift;
                     int riverLevel = currentDwarfMap.getRiverLevel((int)Math.Floor(mux + 0.5), (int)Math.Floor(muy + 0.5)) + shift;
                     if (height > maxHeight) maxHeight = height;
@@ -233,6 +235,13 @@ namespace DwarvenRealms
                         if (y < 2) continue;
                         if (y >= chunk.Blocks.YDim) break;
                         chunk.Blocks.SetID(x, y, z, BlockType.STATIONARY_WATER);
+                    }
+                    //hollow out caves
+                    for (int y = caveFloor; y < caveCeiling; y++)
+                    {
+                        if (y < 2) continue;
+                        if (y >= chunk.Blocks.YDim) break;
+                        chunk.Blocks.SetID(x, y, z, BlockType.AIR);
                     }
                 }
             }

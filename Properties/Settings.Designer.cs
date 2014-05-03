@@ -25,7 +25,7 @@ namespace DwarvenRealms.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1032")]
+        [global::System.Configuration.DefaultSettingValueAttribute("68")]
         public int mapCenterX {
             get {
                 return ((int)(this["mapCenterX"]));
@@ -37,7 +37,7 @@ namespace DwarvenRealms.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1032")]
+        [global::System.Configuration.DefaultSettingValueAttribute("68")]
         public int mapCenterY {
             get {
                 return ((int)(this["mapCenterY"]));
@@ -157,7 +157,7 @@ namespace DwarvenRealms.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("2064")]
+        [global::System.Configuration.DefaultSettingValueAttribute("204")]
         public int borderEast {
             get {
                 return ((int)(this["borderEast"]));
@@ -169,13 +169,37 @@ namespace DwarvenRealms.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("2064")]
+        [global::System.Configuration.DefaultSettingValueAttribute("204")]
         public int borderSouth {
             get {
                 return ((int)(this["borderSouth"]));
             }
             set {
                 this["borderSouth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        public double caveHeight {
+            get {
+                return ((double)(this["caveHeight"]));
+            }
+            set {
+                this["caveHeight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("8")]
+        public double caveScale {
+            get {
+                return ((double)(this["caveScale"]));
+            }
+            set {
+                this["caveScale"] = value;
             }
         }
     }

@@ -3,10 +3,10 @@
   <Profiles />
   <Settings>
     <Setting Name="mapCenterX" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1032</Value>
+      <Value Profile="(Default)">68</Value>
     </Setting>
     <Setting Name="mapCenterY" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1032</Value>
+      <Value Profile="(Default)">68</Value>
     </Setting>
     <Setting Name="tilesPerRegionTile" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">8</Value>
@@ -36,10 +36,16 @@
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="borderEast" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">2064</Value>
+      <Value Profile="(Default)">204</Value>
     </Setting>
     <Setting Name="borderSouth" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">2064</Value>
+      <Value Profile="(Default)">204</Value>
+    </Setting>
+    <Setting Name="caveHeight" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">10</Value>
+    </Setting>
+    <Setting Name="caveScale" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">8</Value>
     </Setting>
   </Settings>
 </SettingsFile>

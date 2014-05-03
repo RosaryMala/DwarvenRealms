@@ -1,5 +1,7 @@
-﻿using System;
+﻿using SimplexNoise;
+using System;
 using System.Drawing;
+using DwarvenRealms.Properties;
 
 namespace DwarvenRealms
 {
@@ -7,6 +9,7 @@ namespace DwarvenRealms
     {
         int[,] biomeMap;
         int[,] elevationMap;
+        int[,] smoothedElevationMap;
         int[,] waterMap;
         int[,] riverHeightMap;
 
@@ -27,6 +30,7 @@ namespace DwarvenRealms
                     elevationMap[x, y] = height;
                 }
             }
+            smoothedElevationMap = Blur.gaussianBlur(elevationMap, 8);
             Console.WriteLine("Loaded elevation map sized {0}x{1}", elevationMap.GetUpperBound(0), elevationMap.GetUpperBound(1));
         }
         public void loadWaterMap(string path)
@@ -72,7 +76,7 @@ namespace DwarvenRealms
             Console.WriteLine("Loaded biome map sized {0}x{1}", biomeMap.GetUpperBound(0), biomeMap.GetUpperBound(1));
         }
 
-        enum InterpolationChoice
+        public enum InterpolationChoice
         {
             linear,
             cosine,
@@ -90,27 +94,32 @@ namespace DwarvenRealms
 
         public double getElevation(double x, double y)
         {
+            return getInterpolatedValue(elevationMap, interpolationChoice, x, y);
+        }
+
+        public static double getInterpolatedValue(int[,] array, InterpolationChoice type, double x, double y)
+        {
             int x1, y1;
             x1 = (int)Math.Floor(x);
             y1 = (int)Math.Floor(y);
 
-            double z11 = getElevation(x1, y1);
-            double z12 = getElevation(x1, y1 + 1);
-            double z21 = getElevation(x1 + 1, y1);
-            double z22 = getElevation(x1 + 1, y1 + 1);
+            double z11 = getClampedCoord(array, x1, y1);
+            double z12 = getClampedCoord(array, x1, y1 + 1);
+            double z21 = getClampedCoord(array, x1 + 1, y1);
+            double z22 = getClampedCoord(array, x1 + 1, y1 + 1);
 
-            double z00 = getElevation(x1 - 1, y1 - 1);
-            double z01 = getElevation(x1 - 1, y1);
-            double z02 = getElevation(x1 - 1, y1 + 1);
-            double z03 = getElevation(x1 - 1, y1 + 2);
-            double z10 = getElevation(x1, y1 - 1);
-            double z13 = getElevation(x1, y1 + 2);
-            double z20 = getElevation(x1 + 1, y1 - 1);
-            double z23 = getElevation(x1 + 1, y1 + 2);
-            double z30 = getElevation(x1 + 2, y1 - 1);
-            double z31 = getElevation(x1 + 2, y1);
-            double z32 = getElevation(x1 + 2, y1 + 1);
-            double z33 = getElevation(x1 + 2, y1 + 2);
+            double z00 = getClampedCoord(array, x1 - 1, y1 - 1);
+            double z01 = getClampedCoord(array, x1 - 1, y1);
+            double z02 = getClampedCoord(array, x1 - 1, y1 + 1);
+            double z03 = getClampedCoord(array, x1 - 1, y1 + 2);
+            double z10 = getClampedCoord(array, x1, y1 - 1);
+            double z13 = getClampedCoord(array, x1, y1 + 2);
+            double z20 = getClampedCoord(array, x1 + 1, y1 - 1);
+            double z23 = getClampedCoord(array, x1 + 1, y1 + 2);
+            double z30 = getClampedCoord(array, x1 + 2, y1 - 1);
+            double z31 = getClampedCoord(array, x1 + 2, y1);
+            double z32 = getClampedCoord(array, x1 + 2, y1 + 1);
+            double z33 = getClampedCoord(array, x1 + 2, y1 + 2);
 
             double muy = x - x1;
             double mux = y - y1;
@@ -118,7 +127,7 @@ namespace DwarvenRealms
             //flat land sometimes gives trouble, so a slight increase can help that.
             double roundingCorrection = 0.5;
 
-            switch (interpolationChoice)
+            switch (type)
             {
                 case InterpolationChoice.linear:
                     return Interpolate.BiLinearInterpolate(z11, z12, z21, z22, mux, muy) + roundingCorrection;
@@ -168,7 +177,7 @@ namespace DwarvenRealms
         /// <param name="x">X coord</param>
         /// <param name="y">Y coord</param>
         /// <returns>The value stored at the nearest valid grid cell, or MinValue if the grid is invalid entirely.</returns>
-        int getClampedCoord(int[,] grid, int x, int y)
+        public static int getClampedCoord(int[,] grid, int x, int y)
         {
             if (grid == null || grid.Length == 0)
                 return int.MinValue;
@@ -181,6 +190,41 @@ namespace DwarvenRealms
             if (y > grid.GetUpperBound(1))
                 y = grid.GetUpperBound(1);
             return grid[x, y];
+        }
+        public static double getClampedCoord(double[,] grid, int x, int y)
+        {
+            if (grid == null || grid.Length == 0)
+                return double.MinValue;
+            if (x < grid.GetLowerBound(0))
+                x = grid.GetLowerBound(0);
+            if (x > grid.GetUpperBound(0))
+                x = grid.GetUpperBound(0);
+            if (y < grid.GetLowerBound(1))
+                y = grid.GetLowerBound(1);
+            if (y > grid.GetUpperBound(1))
+                y = grid.GetUpperBound(1);
+            return grid[x, y];
+        }
+
+        public int getCaveCeiling(double x, double y)
+        {
+            double height = Noise.Generate((float)(x / Settings.Default.caveScale), (float)(y / Settings.Default.caveScale));
+            height += 1;
+            height /= 2;
+            height *= Settings.Default.caveHeight;
+            height *= 2.0 / 3.0;
+            height += getInterpolatedValue(smoothedElevationMap, interpolationChoice, x, y);
+            return (int)(height + 0.5);
+        }
+        public int getCaveFloor(double x, double y)
+        {
+            double height = Noise.Generate((float)(x / Settings.Default.caveScale), (float)(y / Settings.Default.caveScale));
+            height += 1;
+            height /= 2;
+            height *= Settings.Default.caveHeight;
+            height *= -1.0 / 3.0;
+            height += getInterpolatedValue(smoothedElevationMap, interpolationChoice, x, y);
+            return (int)(height + 0.5);
         }
 
         int getFuzzyCoords(int[,] grid, double x, double y)

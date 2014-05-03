@@ -80,6 +80,7 @@
     <Compile Include="AreaSelector.Designer.cs">
       <DependentUpon>AreaSelector.cs</DependentUpon>
     </Compile>
+    <Compile Include="GaussianBlur.cs" />
     <Compile Include="Interpolate.cs" />
     <Compile Include="MainGui.cs">
       <SubType>Form</SubType>
