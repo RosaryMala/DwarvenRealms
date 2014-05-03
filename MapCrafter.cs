@@ -237,12 +237,16 @@ namespace DwarvenRealms
                         chunk.Blocks.SetID(x, y, z, BlockType.STATIONARY_WATER);
                     }
                     //hollow out caves
-                    for (int y = caveFloor; y < caveCeiling; y++)
-                    {
-                        if (y < 2) continue;
-                        if (y >= chunk.Blocks.YDim) break;
-                        chunk.Blocks.SetID(x, y, z, BlockType.AIR);
-                    }
+                    if (caveFloor < caveCeiling)
+                        for (int y = caveFloor - 1; y < caveCeiling; y++)
+                        {
+                            if (y < 2) continue;
+                            if (y >= chunk.Blocks.YDim) break;
+                            if (y == caveFloor - 1)
+                                chunk.Blocks.SetID(x, y, z, BlockType.MYCELIUM);
+                            else
+                                chunk.Blocks.SetID(x, y, z, BlockType.AIR);
+                        }
                 }
             }
         }

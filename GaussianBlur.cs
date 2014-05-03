@@ -38,6 +38,7 @@ namespace DwarvenRealms
                     for (int i = 1; i < radius; i++)
                     {
                         pass1[xi, yi] += DwarfWorldMap.getClampedCoord(inputImage, xi + i, yi) * kernel[i];
+                        pass1[xi, yi] += DwarfWorldMap.getClampedCoord(inputImage, xi - i, yi) * kernel[i];
                     }
                 }
             }            
@@ -49,7 +50,8 @@ namespace DwarvenRealms
                     double pixel = kernel[0] * inputImage[xi, yi];
                     for (int i = 1; i < radius; i++)
                     {
-                        pixel += DwarfWorldMap.getClampedCoord(pass1, xi, yi + 1) * kernel[i];
+                        pixel += DwarfWorldMap.getClampedCoord(pass1, xi, yi + i) * kernel[i];
+                        pixel += DwarfWorldMap.getClampedCoord(pass1, xi, yi - i) * kernel[i];
                     }
                     pass2[xi, yi] = (int)Math.Floor(pixel + 0.5);
                 }

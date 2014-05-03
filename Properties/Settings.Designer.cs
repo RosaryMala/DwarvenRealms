@@ -202,5 +202,17 @@ namespace DwarvenRealms.Properties {
                 this["caveScale"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("60")]
+        public int cavePercentage {
+            get {
+                return ((int)(this["cavePercentage"]));
+            }
+            set {
+                this["cavePercentage"] = value;
+            }
+        }
     }
 }
