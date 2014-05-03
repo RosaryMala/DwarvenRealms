@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{02AE372A-B1FE-4133-B82E-7B272FA5DC24}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DwarvenRealms</RootNamespace>
     <AssemblyName>DwarvenRealms</AssemblyName>
@@ -51,6 +51,7 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationFramework" />
     <Reference Include="SimplexNoise">
       <HintPath>.\SimplexNoise.dll</HintPath>
     </Reference>
