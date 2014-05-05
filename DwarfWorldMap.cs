@@ -13,15 +13,34 @@ namespace DwarvenRealms
         int[,] waterMap;
         int[,] riverHeightMap;
 
+        // unsafe is needed to use raw pointers.
+        // This implementation is not ideal, because before and after calling this function, the user has to manually lock/unlock the bitmap. But there seems to be no other, better, cleaner, more elegant way.
+        unsafe Color fetchColor(int x, int y, int stride, int colorsize, System.Drawing.Imaging.BitmapData bmpdata)
+        {
+            byte* p = (byte*)(void*)bmpdata.Scan0.ToPointer(); // A raw pointer to bytes! This is a rarity in C#.
+            int cs = colorsize;
+            byte* row = &p[y * stride];
+            byte b = row[x*cs];
+            byte g = row[x*cs + 1];
+            byte r = row[x*cs + 2];
+            return Color.FromArgb(r, g, b);
+        }
+
         public void loadElevationMap(string path)
         {
             Bitmap elevationBitmap = (Bitmap)Bitmap.FromFile(path);
+            // For speed improvement, the bitmap must be locked and accessed unsafely.
+            //                                          v lock entire bitmap      v readonly                                   v use pixel format of bitmap
+            var bmpdata = elevationBitmap.LockBits(new Rectangle(0, 0, elevationBitmap.Width, elevationBitmap.Height), System.Drawing.Imaging.ImageLockMode.ReadOnly, elevationBitmap.PixelFormat);
+            int stride = bmpdata.Stride;
+            int colorsize = System.Drawing.Bitmap.GetPixelFormatSize(bmpdata.PixelFormat) / 8; // Divide by 8 because 1 byte is 8 bits and FormatSize returns bits.
+
             elevationMap = new int[elevationBitmap.Width, elevationBitmap.Height];
             for (int y = 0; y < elevationBitmap.Height; y++)
             {
                 for (int x = 0; x < elevationBitmap.Width; x++)
                 {
-                    Color point = elevationBitmap.GetPixel(x, y);
+                    Color point = fetchColor(x, y, stride, colorsize, bmpdata);
                     int height;
                     if (point.R == 0)
                         height = point.B;
@@ -30,19 +49,29 @@ namespace DwarvenRealms
                     elevationMap[x, y] = height;
                 }
             }
+            // Once we are done, immediately unlock the bitmap
+            elevationBitmap.UnlockBits(bmpdata);
+
             smoothedElevationMap = Blur.gaussianBlur(elevationMap, 8);
             Console.WriteLine("Loaded elevation map sized {0}x{1}", elevationMap.GetUpperBound(0), elevationMap.GetUpperBound(1));
         }
+
         public void loadWaterMap(string path)
         {
             Bitmap waterBitMap = (Bitmap)Bitmap.FromFile(path);
+
+            // locking bitmap...
+            var bmpdata = waterBitMap.LockBits(new Rectangle(0, 0, waterBitMap.Width, waterBitMap.Height), System.Drawing.Imaging.ImageLockMode.ReadOnly, waterBitMap.PixelFormat);
+            int stride = bmpdata.Stride;
+            int colorsize = System.Drawing.Bitmap.GetPixelFormatSize(bmpdata.PixelFormat) / 8;
+
             waterMap = new int[waterBitMap.Width, waterBitMap.Height];
             riverHeightMap = new int[waterBitMap.Width, waterBitMap.Height];
             for (int y = 0; y < waterBitMap.Height; y++)
             {
                 for (int x = 0; x < waterBitMap.Width; x++)
                 {
-                    Color point = waterBitMap.GetPixel(x, y);
+                    Color point = fetchColor(x, y, stride, colorsize, bmpdata);
                     if (point.R == 0 && point.G == 0)
                     {
                         waterMap[x, y] = point.B + 25;
@@ -60,19 +89,27 @@ namespace DwarvenRealms
                     }
                 }
             }
+            waterBitMap.UnlockBits(bmpdata); // unlocked bitmap
+
             Console.WriteLine("Loaded ocean map sized {0}x{1}", waterMap.GetUpperBound(0), waterMap.GetUpperBound(1));
         }
         public void loadBiomeMap(string path)
         {
             Bitmap tempBiomeMap = (Bitmap)Bitmap.FromFile(path);
+            // locking bitmap ...
+            var bmpdata = tempBiomeMap.LockBits(new Rectangle(0, 0, tempBiomeMap.Width, tempBiomeMap.Height), System.Drawing.Imaging.ImageLockMode.ReadOnly, tempBiomeMap.PixelFormat);
+            int stride = bmpdata.Stride;
+            int colorsize = System.Drawing.Bitmap.GetPixelFormatSize(bmpdata.PixelFormat) / 8;
+
             biomeMap = new int[tempBiomeMap.Width, tempBiomeMap.Height];
             for (int y = 0; y < tempBiomeMap.Height; y++)
             {
                 for (int x = 0; x < tempBiomeMap.Width; x++)
                 {
-                    biomeMap[x, y] = BiomeList.GetBiomeIndex(tempBiomeMap.GetPixel(x, y));
+                    biomeMap[x, y] = BiomeList.GetBiomeIndex(fetchColor(x, y, stride, colorsize, bmpdata));
                 }
             }
+            tempBiomeMap.UnlockBits(bmpdata); // unlocked bitmap
             Console.WriteLine("Loaded biome map sized {0}x{1}", biomeMap.GetUpperBound(0), biomeMap.GetUpperBound(1));
         }
 
