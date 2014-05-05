@@ -55,11 +55,15 @@
     <Reference Include="SimplexNoise">
       <HintPath>.\SimplexNoise.dll</HintPath>
     </Reference>
+    <Reference Include="SpPerfChart">
+      <HintPath>.\SpPerfChart.dll</HintPath>
+    </Reference>
     <Reference Include="Substrate">
       <HintPath>.\Substrate.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -109,7 +113,6 @@
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>

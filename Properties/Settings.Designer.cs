@@ -50,12 +50,12 @@ namespace DwarvenRealms.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("8")]
-        public int tilesPerRegionTile {
+        public int blocksPerEmbarkTile {
             get {
-                return ((int)(this["tilesPerRegionTile"]));
+                return ((int)(this["blocksPerEmbarkTile"]));
             }
             set {
-                this["tilesPerRegionTile"] = value;
+                this["blocksPerEmbarkTile"] = value;
             }
         }
         
@@ -121,7 +121,7 @@ namespace DwarvenRealms.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("SpikeTest")]
+        [global::System.Configuration.DefaultSettingValueAttribute("DorvenRealm")]
         public string levelName {
             get {
                 return ((string)(this["levelName"]));

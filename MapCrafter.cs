@@ -37,10 +37,10 @@ namespace DwarvenRealms
             // of blocks.  Turn it off.
             chunk.Blocks.AutoLight = false;
 
-            double xMin = ((xi * 16.0 / (double)Settings.Default.tilesPerRegionTile) + Settings.Default.mapCenterX);
-            double xMax = (((xi + 1) * 16.0 / (double)Settings.Default.tilesPerRegionTile) + Settings.Default.mapCenterX);
-            double yMin = ((zi * 16.0 / (double)Settings.Default.tilesPerRegionTile) + Settings.Default.mapCenterY);
-            double yMax = (((zi + 1) * 16.0 / (double)Settings.Default.tilesPerRegionTile) + Settings.Default.mapCenterY);
+            double xMin = ((xi * 16.0 / (double)Settings.Default.blocksPerEmbarkTile) + Settings.Default.mapCenterX);
+            double xMax = (((xi + 1) * 16.0 / (double)Settings.Default.blocksPerEmbarkTile) + Settings.Default.mapCenterX);
+            double yMin = ((zi * 16.0 / (double)Settings.Default.blocksPerEmbarkTile) + Settings.Default.mapCenterY);
+            double yMax = (((zi + 1) * 16.0 / (double)Settings.Default.blocksPerEmbarkTile) + Settings.Default.mapCenterY);
 
 
             // Make the terrain
@@ -55,10 +55,10 @@ namespace DwarvenRealms
             currentWorld.GetChunkManager().Save();
         }
 
-        public static int getChunkStartX() { return ((Settings.Default.borderWest - Settings.Default.mapCenterX) * Settings.Default.tilesPerRegionTile) / 16; }
-        public static int getChunkStartY() { return ((Settings.Default.borderNorth - Settings.Default.mapCenterY) * Settings.Default.tilesPerRegionTile) / 16; }
-        public static int getChunkFinishX() { return ((Settings.Default.borderEast - Settings.Default.mapCenterX) * Settings.Default.tilesPerRegionTile) / 16; }
-        public static int getChunkFinishY() { return ((Settings.Default.borderSouth - Settings.Default.mapCenterY) * Settings.Default.tilesPerRegionTile) / 16; }
+        public static int getChunkStartX() { return ((Settings.Default.borderWest - Settings.Default.mapCenterX) * Settings.Default.blocksPerEmbarkTile) / 16; }
+        public static int getChunkStartY() { return ((Settings.Default.borderNorth - Settings.Default.mapCenterY) * Settings.Default.blocksPerEmbarkTile) / 16; }
+        public static int getChunkFinishX() { return ((Settings.Default.borderEast - Settings.Default.mapCenterX) * Settings.Default.blocksPerEmbarkTile) / 16; }
+        public static int getChunkFinishY() { return ((Settings.Default.borderSouth - Settings.Default.mapCenterY) * Settings.Default.blocksPerEmbarkTile) / 16; }
 
         public void loadDwarfMaps()
         {
@@ -129,10 +129,10 @@ namespace DwarvenRealms
                     // of blocks.  Turn it off.
                     chunk.Blocks.AutoLight = false;
 
-                    double xMin = ((xi * 16.0 / (double)Settings.Default.tilesPerRegionTile) + Settings.Default.mapCenterX);
-                    double xMax = (((xi + 1) * 16.0 / (double)Settings.Default.tilesPerRegionTile) + Settings.Default.mapCenterX);
-                    double yMin = ((zi * 16.0 / (double)Settings.Default.tilesPerRegionTile) + Settings.Default.mapCenterY);
-                    double yMax = (((zi + 1) * 16.0 / (double)Settings.Default.tilesPerRegionTile) + Settings.Default.mapCenterY);
+                    double xMin = ((xi * 16.0 / (double)Settings.Default.blocksPerEmbarkTile) + Settings.Default.mapCenterX);
+                    double xMax = (((xi + 1) * 16.0 / (double)Settings.Default.blocksPerEmbarkTile) + Settings.Default.mapCenterX);
+                    double yMin = ((zi * 16.0 / (double)Settings.Default.blocksPerEmbarkTile) + Settings.Default.mapCenterY);
+                    double yMax = (((zi + 1) * 16.0 / (double)Settings.Default.blocksPerEmbarkTile) + Settings.Default.mapCenterY);
 
 
                     // Make the terrain

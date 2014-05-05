@@ -3,6 +3,7 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Forms;
+using SpPerfChart;
 
 namespace DwarvenRealms
 {
@@ -17,6 +18,17 @@ namespace DwarvenRealms
             elevationMapPathTextBox.Text = Settings.Default.elevationMapPath;
             elevationWaterMapPathTextBox.Text = Settings.Default.elevationWaterMapPath;
             biomeMapPathTextBox.Text = Settings.Default.biomeMapPath;
+            borderNorthInput.Value = Settings.Default.borderNorth;
+            borderSouthInput.Value = Settings.Default.borderSouth;
+            borderWestInput.Value = Settings.Default.borderWest;
+            borderEastInput.Value = Settings.Default.borderEast;
+            centerXInput.Value = Settings.Default.mapCenterX;
+            centerYInput.Value = Settings.Default.mapCenterY;
+            blocksPerTileInput.Value = Settings.Default.blocksPerEmbarkTile;
+            caveCoverageInput.Value = Settings.Default.cavePercentage;
+            caveHeightInput.Value = (decimal)Settings.Default.caveHeight;
+            caveWidthInput.Value = (decimal)Settings.Default.caveScale;
+            levelNameTextBox.Text = Settings.Default.levelName;
             string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\.minecraft\\saves";
             minecraftSaveSelector.SelectedPath = path;
         }
@@ -57,6 +69,13 @@ namespace DwarvenRealms
                 }
             }
             craft.saveMinecraftWorld();
+        }
+
+        private void UpdateAreaOutput()
+        {
+            double area = (Settings.Default.borderSouth - Settings.Default.borderNorth) * (Settings.Default.borderEast - Settings.Default.borderWest)
+                * Settings.Default.blocksPerEmbarkTile * Settings.Default.blocksPerEmbarkTile / 1000000.0;
+            areaOutputText.Text = "= " + area.ToString("F2") + "km²";
         }
 
         private void MapGenerationWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -145,6 +164,76 @@ namespace DwarvenRealms
             {
                biomeMapPathTextBox.Text = biomeMapFileDialog.FileName;
             }
+        }
+
+        private void borderNorthInput_ValueChanged(object sender, EventArgs e)
+        {
+            Settings.Default.borderNorth = (int)borderNorthInput.Value;
+            borderSouthInput.Minimum = borderNorthInput.Value + 1;
+            UpdateAreaOutput();
+        }
+
+        private void borderEastInput_ValueChanged(object sender, EventArgs e)
+        {
+            Settings.Default.borderEast = (int)borderEastInput.Value;
+            borderWestInput.Maximum = borderEastInput.Value - 1;
+            UpdateAreaOutput();
+        }
+
+        private void borderSouthInput_ValueChanged(object sender, EventArgs e)
+        {
+            Settings.Default.borderSouth = (int)borderSouthInput.Value;
+            borderNorthInput.Maximum = borderSouthInput.Value - 1;
+            UpdateAreaOutput();
+        }
+
+        private void borderWestInput_ValueChanged(object sender, EventArgs e)
+        {
+            Settings.Default.borderWest = (int)borderWestInput.Value;
+            borderEastInput.Minimum = borderWestInput.Value + 1;
+            UpdateAreaOutput();
+        }
+
+        private void recenterButton_Click(object sender, EventArgs e)
+        {
+            centerXInput.Value = (borderWestInput.Value + borderEastInput.Value) / 2;
+            centerYInput.Value = (borderNorthInput.Value + borderSouthInput.Value) / 2;
+        }
+
+        private void centerXInput_ValueChanged(object sender, EventArgs e)
+        {
+            Settings.Default.mapCenterX = (int)centerXInput.Value;
+        }
+
+        private void centerYInput_ValueChanged(object sender, EventArgs e)
+        {
+            Settings.Default.mapCenterY = (int)centerYInput.Value;
+        }
+
+        private void blocksPerTileInput_ValueChanged(object sender, EventArgs e)
+        {
+            Settings.Default.blocksPerEmbarkTile = (int)blocksPerTileInput.Value;
+            UpdateAreaOutput();
+        }
+
+        private void caveHeightInput_ValueChanged(object sender, EventArgs e)
+        {
+            Settings.Default.caveHeight = (double)caveHeightInput.Value;
+        }
+
+        private void caveWidthInput_ValueChanged(object sender, EventArgs e)
+        {
+            Settings.Default.caveScale = (double)caveWidthInput.Value;
+        }
+
+        private void caveCoverageInput_ValueChanged(object sender, EventArgs e)
+        {
+            Settings.Default.cavePercentage = (int)caveCoverageInput.Value;
+        }
+
+        private void levelNameTextBox_TextChanged(object sender, EventArgs e)
+        {
+            Settings.Default.levelName = levelNameTextBox.Text;
         }
     }
 }

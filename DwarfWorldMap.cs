@@ -206,12 +206,12 @@ namespace DwarvenRealms
             return grid[x, y];
         }
 
-        double getCaveness(double x, double y)
+        double getOpenCave(double x, double y, double scale, double percentage)
         {
-            double caveness = Noise.Generate((float)(x / Settings.Default.caveScale), (float)(y / Settings.Default.caveScale));
+            double caveness = Noise.Generate((float)(x / scale), (float)(y / scale));
             caveness = ((caveness + 1.0) / 2) * 100;
-            caveness -= (100 - Settings.Default.cavePercentage);
-            caveness /= Settings.Default.cavePercentage;
+            caveness -= (100 - percentage);
+            caveness /= percentage;
             if (caveness < 0)
                 caveness = 0;
             return caveness;
@@ -219,7 +219,7 @@ namespace DwarvenRealms
 
         public int getCaveCeiling(double x, double y)
         {
-            double height = getCaveness(x, y);
+            double height = getOpenCave(x, y, Settings.Default.caveScale, Settings.Default.cavePercentage);
             height *= Settings.Default.caveHeight;
             height *= 2.0 / 3.0;
             height += (getInterpolatedValue(smoothedElevationMap, interpolationChoice, x, y) * 0.6);
@@ -227,7 +227,7 @@ namespace DwarvenRealms
         }
         public int getCaveFloor(double x, double y)
         {
-            double height = getCaveness(x, y);
+            double height = getOpenCave(x, y, Settings.Default.caveScale, Settings.Default.cavePercentage);
             height *= Settings.Default.caveHeight;
             height *= -1.0 / 3.0;
             height += (getInterpolatedValue(smoothedElevationMap, interpolationChoice, x, y) * 0.6);
