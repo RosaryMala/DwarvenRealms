@@ -57,6 +57,14 @@
             this.label7 = new System.Windows.Forms.Label();
             this.blocksPerTileInput = new System.Windows.Forms.NumericUpDown();
             this.areaOutputText = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.caveHeightInput = new System.Windows.Forms.NumericUpDown();
+            this.caveWidthInput = new System.Windows.Forms.NumericUpDown();
+            this.caveCoverageInput = new System.Windows.Forms.NumericUpDown();
+            this.label11 = new System.Windows.Forms.Label();
+            this.levelNameTextBox = new System.Windows.Forms.TextBox();
             this.GenerateTab = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.MapGenerationProgressBar = new System.Windows.Forms.ProgressBar();
@@ -69,14 +77,6 @@
             this.elevationMapFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.elevationWaterMapFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.biomeMapFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.caveHeightInput = new System.Windows.Forms.NumericUpDown();
-            this.caveWidthInput = new System.Windows.Forms.NumericUpDown();
-            this.caveCoverageInput = new System.Windows.Forms.NumericUpDown();
-            this.label11 = new System.Windows.Forms.Label();
-            this.levelNameTextBox = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.LoadFileTab.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -88,12 +88,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.centerXInput)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.centerYInput)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.blocksPerTileInput)).BeginInit();
-            this.GenerateTab.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
-            this.flowLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.caveHeightInput)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.caveWidthInput)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.caveCoverageInput)).BeginInit();
+            this.GenerateTab.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
+            this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -497,8 +497,110 @@
             this.areaOutputText.Name = "areaOutputText";
             this.areaOutputText.Size = new System.Drawing.Size(94, 26);
             this.areaOutputText.TabIndex = 12;
-            this.areaOutputText.Text = "= Xkm2";
+            this.areaOutputText.Text = "= Xkm²";
             this.areaOutputText.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label8.Location = new System.Drawing.Point(3, 156);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(94, 26);
+            this.label8.TabIndex = 13;
+            this.label8.Text = "Cave Height";
+            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label9.Location = new System.Drawing.Point(3, 182);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(94, 26);
+            this.label9.TabIndex = 14;
+            this.label9.Text = "Cave Width";
+            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label10.Location = new System.Drawing.Point(3, 208);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(94, 26);
+            this.label10.TabIndex = 15;
+            this.label10.Text = "Cave Coverage";
+            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // caveHeightInput
+            // 
+            this.caveHeightInput.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.caveHeightInput.Location = new System.Drawing.Point(103, 159);
+            this.caveHeightInput.Maximum = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
+            this.caveHeightInput.Name = "caveHeightInput";
+            this.caveHeightInput.Size = new System.Drawing.Size(94, 20);
+            this.caveHeightInput.TabIndex = 16;
+            this.caveHeightInput.ValueChanged += new System.EventHandler(this.caveHeightInput_ValueChanged);
+            // 
+            // caveWidthInput
+            // 
+            this.caveWidthInput.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.caveWidthInput.Location = new System.Drawing.Point(103, 185);
+            this.caveWidthInput.Maximum = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
+            this.caveWidthInput.Name = "caveWidthInput";
+            this.caveWidthInput.Size = new System.Drawing.Size(94, 20);
+            this.caveWidthInput.TabIndex = 17;
+            this.caveWidthInput.ValueChanged += new System.EventHandler(this.caveWidthInput_ValueChanged);
+            // 
+            // caveCoverageInput
+            // 
+            this.caveCoverageInput.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.caveCoverageInput.Location = new System.Drawing.Point(103, 211);
+            this.caveCoverageInput.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.caveCoverageInput.Name = "caveCoverageInput";
+            this.caveCoverageInput.Size = new System.Drawing.Size(94, 20);
+            this.caveCoverageInput.TabIndex = 18;
+            this.caveCoverageInput.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.caveCoverageInput.ValueChanged += new System.EventHandler(this.caveCoverageInput_ValueChanged);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.tableLayoutPanel3.SetColumnSpan(this.label11, 2);
+            this.label11.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label11.Location = new System.Drawing.Point(3, 260);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(194, 26);
+            this.label11.TabIndex = 19;
+            this.label11.Text = "Minecraft level name";
+            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // levelNameTextBox
+            // 
+            this.tableLayoutPanel3.SetColumnSpan(this.levelNameTextBox, 3);
+            this.levelNameTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.levelNameTextBox.Location = new System.Drawing.Point(203, 263);
+            this.levelNameTextBox.Name = "levelNameTextBox";
+            this.levelNameTextBox.Size = new System.Drawing.Size(294, 20);
+            this.levelNameTextBox.TabIndex = 20;
+            this.levelNameTextBox.TextChanged += new System.EventHandler(this.levelNameTextBox_TextChanged);
             // 
             // GenerateTab
             // 
@@ -605,108 +707,6 @@
             this.biomeMapFileDialog.FileName = "world_graphic-bm-*";
             this.biomeMapFileDialog.Filter = "Image Files(*.BMP;*.PNG)|*.BMP;*.PNG|All files (*.*)|*.*";
             // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label8.Location = new System.Drawing.Point(3, 156);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(94, 26);
-            this.label8.TabIndex = 13;
-            this.label8.Text = "Cave Height";
-            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label9.Location = new System.Drawing.Point(3, 182);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(94, 26);
-            this.label9.TabIndex = 14;
-            this.label9.Text = "Cave Width";
-            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label10.Location = new System.Drawing.Point(3, 208);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(94, 26);
-            this.label10.TabIndex = 15;
-            this.label10.Text = "Cave Coverage";
-            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // caveHeightInput
-            // 
-            this.caveHeightInput.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.caveHeightInput.Location = new System.Drawing.Point(103, 159);
-            this.caveHeightInput.Maximum = new decimal(new int[] {
-            999,
-            0,
-            0,
-            0});
-            this.caveHeightInput.Name = "caveHeightInput";
-            this.caveHeightInput.Size = new System.Drawing.Size(94, 20);
-            this.caveHeightInput.TabIndex = 16;
-            this.caveHeightInput.ValueChanged += new System.EventHandler(this.caveHeightInput_ValueChanged);
-            // 
-            // caveWidthInput
-            // 
-            this.caveWidthInput.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.caveWidthInput.Location = new System.Drawing.Point(103, 185);
-            this.caveWidthInput.Maximum = new decimal(new int[] {
-            999,
-            0,
-            0,
-            0});
-            this.caveWidthInput.Name = "caveWidthInput";
-            this.caveWidthInput.Size = new System.Drawing.Size(94, 20);
-            this.caveWidthInput.TabIndex = 17;
-            this.caveWidthInput.ValueChanged += new System.EventHandler(this.caveWidthInput_ValueChanged);
-            // 
-            // caveCoverageInput
-            // 
-            this.caveCoverageInput.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.caveCoverageInput.Location = new System.Drawing.Point(103, 211);
-            this.caveCoverageInput.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.caveCoverageInput.Name = "caveCoverageInput";
-            this.caveCoverageInput.Size = new System.Drawing.Size(94, 20);
-            this.caveCoverageInput.TabIndex = 18;
-            this.caveCoverageInput.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.caveCoverageInput.ValueChanged += new System.EventHandler(this.caveCoverageInput_ValueChanged);
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.tableLayoutPanel3.SetColumnSpan(this.label11, 2);
-            this.label11.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label11.Location = new System.Drawing.Point(3, 260);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(194, 26);
-            this.label11.TabIndex = 19;
-            this.label11.Text = "Minecraft level name";
-            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // levelNameTextBox
-            // 
-            this.tableLayoutPanel3.SetColumnSpan(this.levelNameTextBox, 3);
-            this.levelNameTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.levelNameTextBox.Location = new System.Drawing.Point(203, 263);
-            this.levelNameTextBox.Name = "levelNameTextBox";
-            this.levelNameTextBox.Size = new System.Drawing.Size(294, 20);
-            this.levelNameTextBox.TabIndex = 20;
-            this.levelNameTextBox.TextChanged += new System.EventHandler(this.levelNameTextBox_TextChanged);
-            // 
             // MainGui
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -728,13 +728,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.centerXInput)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.centerYInput)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.blocksPerTileInput)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.caveHeightInput)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.caveWidthInput)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.caveCoverageInput)).EndInit();
             this.GenerateTab.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.flowLayoutPanel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.caveHeightInput)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.caveWidthInput)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.caveCoverageInput)).EndInit();
             this.ResumeLayout(false);
 
         }
