@@ -61,7 +61,7 @@ namespace DwarvenRealms.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("D:/DwarfFortress/df_34_11_win/world_graphic-el-region1-250-16014.bmp")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string elevationMapPath {
             get {
                 return ((string)(this["elevationMapPath"]));
@@ -73,7 +73,7 @@ namespace DwarvenRealms.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("D:/DwarfFortress/df_34_11_win/world_graphic-elw-region1-250-16014.bmp")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string elevationWaterMapPath {
             get {
                 return ((string)(this["elevationWaterMapPath"]));
@@ -97,7 +97,7 @@ namespace DwarvenRealms.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:/Users/Japa/AppData/Roaming/.minecraft/saves/interpo/")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string outputPath {
             get {
                 return ((string)(this["outputPath"]));
@@ -109,7 +109,7 @@ namespace DwarvenRealms.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("D:/DwarfFortress/df_34_11_win/world_graphic-bm-region1-250-16014.bmp")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string biomeMapPath {
             get {
                 return ((string)(this["biomeMapPath"]));
@@ -212,6 +212,66 @@ namespace DwarvenRealms.Properties {
             }
             set {
                 this["cavePercentage"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool lightGenerationEnable {
+            get {
+                return ((bool)(this["lightGenerationEnable"]));
+            }
+            set {
+                this["lightGenerationEnable"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int gameMode {
+            get {
+                return ((int)(this["gameMode"]));
+            }
+            set {
+                this["gameMode"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("168")]
+        public int evilThreshold {
+            get {
+                return ((int)(this["evilThreshold"]));
+            }
+            set {
+                this["evilThreshold"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("18")]
+        public int evilDensity {
+            get {
+                return ((int)(this["evilDensity"]));
+            }
+            set {
+                this["evilDensity"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string evilMapPath {
+            get {
+                return ((string)(this["evilMapPath"]));
+            }
+            set {
+                this["evilMapPath"] = value;
             }
         }
     }

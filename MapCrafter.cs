@@ -74,9 +74,16 @@ namespace DwarvenRealms
 
             // We can set different world parameters
             currentWorld.Level.LevelName = Settings.Default.levelName;
-            currentWorld.Level.Spawn = new SpawnPoint(20, 255, 20);
-            currentWorld.Level.GameType = GameType.CREATIVE;
-            currentWorld.Level.AllowCommands = true;
+            currentWorld.Level.Spawn = new SpawnPoint(0, 255, 0);
+            if (Settings.Default.gameMode == 0)
+            {
+                currentWorld.Level.GameType = GameType.SURVIVAL;
+            }
+            else
+            {
+                currentWorld.Level.GameType = GameType.CREATIVE;
+                currentWorld.Level.AllowCommands = true;
+            }
         }
 
         public void saveMinecraftWorld()
@@ -107,7 +114,7 @@ namespace DwarvenRealms
             //FIXME get rid of this junk
             Settings.Default.mapCenterX = (Settings.Default.borderWest + Settings.Default.borderEast) / 2;
             Settings.Default.mapCenterY = (Settings.Default.borderNorth + Settings.Default.borderSouth) / 2;
-            
+
 
             Console.WriteLine("Starting conversion now.");
             Stopwatch watch = Stopwatch.StartNew();
@@ -140,8 +147,11 @@ namespace DwarvenRealms
 
                     // Reset and rebuild the lighting for the entire chunk at once
                     chunk.Blocks.RebuildHeightMap();
-                    chunk.Blocks.RebuildBlockLight();
-                    chunk.Blocks.RebuildSkyLight();
+                    if (Settings.Default.lightGenerationEnable)
+                    {
+                        chunk.Blocks.RebuildBlockLight();
+                        chunk.Blocks.RebuildSkyLight();
+                    }
 
                     // Save the chunk to disk so it doesn't hang around in RAM
                     cm.Save();
@@ -199,21 +209,21 @@ namespace DwarvenRealms
                         for (int y = height - 1; y < height; y++)
                         {
                             chunk.Blocks.SetID(x, y, z, BlockType.WATER);
-                        }                        
+                        }
                     }
                     else if (BiomeList.biomes[biomeIndex].mineCraftBiome == BiomeID.DeepOcean && waterLevel <= height)
                     {
                         //make beaches
                         chunk.Biomes.SetBiome(x, z, BiomeType.Beach);
                         height = 98 + shift;
-                        for(int y = 0; y < height - 4; y++)
+                        for (int y = 0; y < height - 4; y++)
                         {
                             chunk.Blocks.SetID(x, y, z, BlockType.STONE);
                         }
                         for (int y = height - 4; y < height - 3; y++)
                         {
                             chunk.Blocks.SetID(x, y, z, BlockType.SANDSTONE);
-                        } 
+                        }
                         for (int y = height - 3; y < height; y++)
                         {
                             chunk.Blocks.SetID(x, y, z, BlockType.SAND);

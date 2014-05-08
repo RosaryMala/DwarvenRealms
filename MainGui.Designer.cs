@@ -377,6 +377,11 @@
             this.borderEastInput.Name = "borderEastInput";
             this.borderEastInput.Size = new System.Drawing.Size(94, 20);
             this.borderEastInput.TabIndex = 3;
+            this.borderEastInput.Value = new decimal(new int[] {
+            4112,
+            0,
+            0,
+            0});
             this.borderEastInput.ValueChanged += new System.EventHandler(this.borderEastInput_ValueChanged);
             // 
             // borderSouthInput
@@ -391,6 +396,11 @@
             this.borderSouthInput.Name = "borderSouthInput";
             this.borderSouthInput.Size = new System.Drawing.Size(94, 20);
             this.borderSouthInput.TabIndex = 4;
+            this.borderSouthInput.Value = new decimal(new int[] {
+            4112,
+            0,
+            0,
+            0});
             this.borderSouthInput.ValueChanged += new System.EventHandler(this.borderSouthInput_ValueChanged);
             // 
             // label5

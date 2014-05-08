@@ -12,19 +12,19 @@
       <Value Profile="(Default)">8</Value>
     </Setting>
     <Setting Name="elevationMapPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">D:/DwarfFortress/df_34_11_win/world_graphic-el-region1-250-16014.bmp</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="elevationWaterMapPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">D:/DwarfFortress/df_34_11_win/world_graphic-elw-region1-250-16014.bmp</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="hydrosphereMapPath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="outputPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:/Users/Japa/AppData/Roaming/.minecraft/saves/interpo/</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="biomeMapPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">D:/DwarfFortress/df_34_11_win/world_graphic-bm-region1-250-16014.bmp</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="levelName" Type="System.String" Scope="User">
       <Value Profile="(Default)">DorvenRealm</Value>
@@ -49,6 +49,12 @@
     </Setting>
     <Setting Name="cavePercentage" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">60</Value>
+    </Setting>
+    <Setting Name="lightGenerationEnable" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="gameMode" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
     </Setting>
   </Settings>
 </SettingsFile>
