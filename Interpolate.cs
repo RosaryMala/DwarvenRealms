@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 
 namespace DwarvenRealms
 {
@@ -18,12 +19,28 @@ namespace DwarvenRealms
             return (y1 * (1 - mu) + y2 * mu);
         }
 
+        public static PointF LinearInterpolate(PointF p1, PointF p2, double mu)
+        {
+            PointF pOut = new PointF();
+            pOut.X = (float)LinearInterpolate(p1.X, p2.X, mu);
+            pOut.Y = (float)LinearInterpolate(p1.Y, p2.Y, mu);
+            return pOut;
+        }
+
         public static double CosineInterpolate(double y1, double y2, double mu)
         {
             double mu2;
 
             mu2 = (1 - Math.Cos(mu * Math.PI)) / 2;
             return (y1 * (1 - mu2) + y2 * mu2);
+        }
+
+        public static PointF CosineInterpolate(PointF p1, PointF p2, double mu)
+        {
+            PointF pOut = new PointF();
+            pOut.X = (float)CosineInterpolate(p1.X, p2.X, mu);
+            pOut.Y = (float)CosineInterpolate(p1.Y, p2.Y, mu);
+            return pOut;
         }
 
         public static double CubicInterpolate(double y0, double y1, double y2, double y3, double mu)
@@ -39,6 +56,26 @@ namespace DwarvenRealms
             return (a0 * mu * mu2 + a1 * mu2 + a2 * mu + a3);
         }
 
+        public static PointF CubicInterpolate(PointF p0, PointF p1, PointF p2, PointF p3, double mu)
+        {
+            if (p0 == null)
+            {
+                p0 = new PointF();
+                p0.X = p1.X + p1.X - p2.X;
+                p0.Y = p1.Y + p1.Y - p2.Y;
+            }
+            if (p3 == null)
+            {
+                p3 = new PointF();
+                p3.X = p2.X + p2.X - p1.X;
+                p3.Y = p2.Y + p2.Y - p1.Y;
+            }
+            PointF pOut = new PointF();
+            pOut.X = (float)CubicInterpolate(p0.X, p1.X, p2.X, p3.X, mu);
+            pOut.Y = (float)CubicInterpolate(p0.X, p1.X, p2.X, p3.X, mu);
+            return pOut;
+        }
+
         public static double CatmullRomInterpolate(double y0, double y1, double y2, double y3, double mu)
         {
             double a0, a1, a2, a3, mu2;
@@ -51,7 +88,25 @@ namespace DwarvenRealms
 
             return (a0 * mu * mu2 + a1 * mu2 + a2 * mu + a3);
         }
-
+        public static PointF CatmullRomInterpolate(PointF p0, PointF p1, PointF p2, PointF p3, double mu)
+        {
+            if (p0 == null)
+            {
+                p0 = new PointF();
+                p0.X = p1.X + p1.X - p2.X;
+                p0.Y = p1.Y + p1.Y - p2.Y;
+            }
+            if (p3 == null)
+            {
+                p3 = new PointF();
+                p3.X = p2.X + p2.X - p1.X;
+                p3.Y = p2.Y + p2.Y - p1.Y;
+            }
+            PointF pOut = new PointF();
+            pOut.X = (float)CatmullRomInterpolate(p0.X, p1.X, p2.X, p3.X, mu);
+            pOut.Y = (float)CatmullRomInterpolate(p0.X, p1.X, p2.X, p3.X, mu);
+            return pOut;
+        }
 
         /// <summary>
         /// Much like cubic interpolation, but has control over sharpness, using tention and bias controls.
@@ -81,6 +136,25 @@ namespace DwarvenRealms
             a3 = -2 * mu3 + 3 * mu2;
 
             return (a0 * y1 + a1 * m0 + a2 * m1 + a3 * y2);
+        }
+        public static PointF HermiteInterpolate(PointF p0, PointF p1, PointF p2, PointF p3, double mu, double tension = 0, double bias = 0)
+        {
+            if (p0 == null)
+            {
+                p0 = new PointF();
+                p0.X = p1.X + p1.X - p2.X;
+                p0.Y = p1.Y + p1.Y - p2.Y;
+            }
+            if (p3 == null)
+            {
+                p3 = new PointF();
+                p3.X = p2.X + p2.X - p1.X;
+                p3.Y = p2.Y + p2.Y - p1.Y;
+            }
+            PointF pOut = new PointF();
+            pOut.X = (float)HermiteInterpolate(p0.X, p1.X, p2.X, p3.X, mu, tension, bias);
+            pOut.Y = (float)HermiteInterpolate(p0.X, p1.X, p2.X, p3.X, mu, tension, bias);
+            return pOut;
         }
 
         public static double FritschCarlsonInterpolate(double y0, double y1, double y2, double y3, double mu)
@@ -121,6 +195,25 @@ namespace DwarvenRealms
 
             return y1 + c11 * mu + c21 * mu2 + c31 * mu3;
 
+        }
+        public static PointF FritschCarlsonInterpolate(PointF p0, PointF p1, PointF p2, PointF p3, double mu)
+        {
+            if (p0 == null)
+            {
+                p0 = new PointF();
+                p0.X = p1.X + p1.X - p2.X;
+                p0.Y = p1.Y + p1.Y - p2.Y;
+            }
+            if (p3 == null)
+            {
+                p3 = new PointF();
+                p3.X = p2.X + p2.X - p1.X;
+                p3.Y = p2.Y + p2.Y - p1.Y;
+            }
+            PointF pOut = new PointF();
+            pOut.X = (float)FritschCarlsonInterpolate(p0.X, p1.X, p2.X, p3.X, mu);
+            pOut.Y = (float)FritschCarlsonInterpolate(p0.X, p1.X, p2.X, p3.X, mu);
+            return pOut;
         }
 
         public static double BiLinearInterpolate(double z00, double z01, double z10, double z11, double mux, double muy)
