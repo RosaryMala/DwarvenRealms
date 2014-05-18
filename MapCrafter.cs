@@ -193,66 +193,69 @@ namespace DwarvenRealms
                     {
                         chunk.Blocks.SetID(x, y, z, BlockType.BEDROCK);
                     }
-                    //deal with rivers
-                    if (riverLevel >= 0)
-                    {
-                        chunk.Biomes.SetBiome(x, z, BiomeType.River);
-                        height = riverLevel;
-                        for (int y = 0; y < height - 2; y++)
-                        {
-                            chunk.Blocks.SetID(x, y, z, BlockType.STONE);
-                        }
-                        for (int y = height - 2; y < height - 1; y++)
-                        {
-                            chunk.Blocks.SetID(x, y, z, BlockType.GRAVEL);
-                        }
-                        for (int y = height - 1; y < height; y++)
-                        {
-                            chunk.Blocks.SetID(x, y, z, BlockType.WATER);
-                        }
-                    }
-                    else if (BiomeList.biomes[biomeIndex].mineCraftBiome == BiomeID.DeepOcean && waterLevel <= height)
-                    {
-                        //make beaches
-                        chunk.Biomes.SetBiome(x, z, BiomeType.Beach);
-                        height = 98 + shift;
-                        for (int y = 0; y < height - 4; y++)
-                        {
-                            chunk.Blocks.SetID(x, y, z, BlockType.STONE);
-                        }
-                        for (int y = height - 4; y < height - 3; y++)
-                        {
-                            chunk.Blocks.SetID(x, y, z, BlockType.SANDSTONE);
-                        }
-                        for (int y = height - 3; y < height; y++)
-                        {
-                            chunk.Blocks.SetID(x, y, z, BlockType.SAND);
-                        }
+                    ////deal with rivers
+                    //if (riverLevel >= 0)
+                    //{
+                    //    chunk.Biomes.SetBiome(x, z, BiomeType.River);
+                    //    height = riverLevel;
+                    //    for (int y = 0; y < height - 2; y++)
+                    //    {
+                    //        chunk.Blocks.SetID(x, y, z, BlockType.STONE);
+                    //    }
+                    //    for (int y = height - 2; y < height - 1; y++)
+                    //    {
+                    //        chunk.Blocks.SetID(x, y, z, BlockType.GRAVEL);
+                    //    }
+                    //    for (int y = height - 1; y < height; y++)
+                    //    {
+                    //        chunk.Blocks.SetID(x, y, z, BlockType.WATER);
+                    //    }
+                    //}
+                    //else if (BiomeList.biomes[biomeIndex].mineCraftBiome == BiomeID.DeepOcean && waterLevel <= height)
+                    //{
+                    //    //make beaches
+                    //    chunk.Biomes.SetBiome(x, z, BiomeType.Beach);
+                    //    height = 98 + shift;
+                    //    for (int y = 0; y < height - 4; y++)
+                    //    {
+                    //        chunk.Blocks.SetID(x, y, z, BlockType.STONE);
+                    //    }
+                    //    for (int y = height - 4; y < height - 3; y++)
+                    //    {
+                    //        chunk.Blocks.SetID(x, y, z, BlockType.SANDSTONE);
+                    //    }
+                    //    for (int y = height - 3; y < height; y++)
+                    //    {
+                    //        chunk.Blocks.SetID(x, y, z, BlockType.SAND);
+                    //    }
 
-                    }
-                    else
-                    {
-                        // Create the rest, according to biome
-                        for (int y = 2; y < height; y++)
-                        {
-                            if (y >= chunk.Blocks.YDim) break;
-                            int caveID = currentCaveMap.getCaveBlock(x + (chunk.X * 16), y-shift, z + (chunk.Z * 16));
-                            if(caveID >=0)
-                                chunk.Blocks.SetID(x, y, z, caveID);
-                        }
-                    }
-                    // Create Oceans and lakes
-                    for (int y = height; y < waterLevel; y++)
-                    {
-                        if (y < 2) continue;
-                        if (y >= chunk.Blocks.YDim) break;
-                        chunk.Blocks.SetID(x, y, z, BlockType.STATIONARY_WATER);
-                    }
-                    // Create the rest, according to biome
+                    //}
+                    //else
+                    //{
+                    //    // Create the rest, according to biome
+                    //    for (int y = 2; y < height; y++)
+                    //    {
+                    //        if (y >= chunk.Blocks.YDim) break;
+                    //        chunk.Blocks.SetID(x, y, z, BiomeList.biomes[biomeIndex].getBlockID(height - y, x + (chunk.X * 16), z + (chunk.Z * 16)));
+                    //    }
+                    //}
+                    //// Create Oceans and lakes
+                    //for (int y = height; y < waterLevel; y++)
+                    //{
+                    //    if (y < 2) continue;
+                    //    if (y >= chunk.Blocks.YDim) break;
+                    //    chunk.Blocks.SetID(x, y, z, BlockType.STATIONARY_WATER);
+                    //}
+
+                    // Fill caves
                     for (int y = 2; y < height; y++)
                     {
                         if (y >= chunk.Blocks.YDim) break;
-                        chunk.Blocks.SetID(x, y, z, BiomeList.biomes[biomeIndex].getBlockID(height - y, x + (chunk.X * 16), z + (chunk.Z * 16)));
+                        int caveID = currentCaveMap.getCaveBlock(mux, y - shift, muy);
+                        if (caveID == -2)
+                            break;
+                        if (caveID >= 0)
+                            chunk.Blocks.SetID(x, y, z, caveID);
                     }
                 }
             }
