@@ -25,7 +25,23 @@ namespace DwarvenRealms
 
         public int getCaveBlock(float x, float y, float z)
         {
-            return -1;
+            int caveInteriorMat = Substrate.BlockType.AIR;
+            int caveFloorMat = Substrate.BlockType.MYCELIUM;
+            int caveCeilingMat = Substrate.BlockType.STONE;
+            int caveExteriorMat = Substrate.BlockType.AIR;
+
+            int caveTopHeight = getCaveCeiling(x, z);
+            int caveBottomHeight = getCaveFloor(x, z);
+
+            if (caveTopHeight < caveBottomHeight)
+                return caveExteriorMat;
+            else if (y == caveTopHeight)
+                return caveCeilingMat;
+            else if (y == caveBottomHeight)
+                return caveFloorMat;
+            else if (y > caveBottomHeight && y < caveTopHeight)
+                return caveInteriorMat;
+            else return caveExteriorMat;
         }
 
         double getOpenCave(double x, double y, double scale, double percentage)

@@ -182,8 +182,6 @@ namespace DwarvenRealms
                     double mux = (mapXMax - mapXMin) * x / 16.0 + mapXMin;
                     double muy = (mapYMax - mapYMin) * z / 16.0 + mapYMin;
                     int height = (int)currentDwarfMap.getElevation(mux, muy) + shift;
-                    int caveCeiling = currentCaveMap.getCaveCeiling(mux, muy) + shift;
-                    int caveFloor = currentCaveMap.getCaveFloor(mux, muy) + shift;
                     int waterLevel = currentDwarfMap.getWaterbodyLevel((int)Math.Floor(mux + 0.5), (int)Math.Floor(muy + 0.5)) + shift;
                     int riverLevel = currentDwarfMap.getRiverLevel((int)Math.Floor(mux + 0.5), (int)Math.Floor(muy + 0.5)) + shift;
                     if (height > maxHeight) maxHeight = height;
@@ -238,7 +236,9 @@ namespace DwarvenRealms
                         for (int y = 2; y < height; y++)
                         {
                             if (y >= chunk.Blocks.YDim) break;
-                            chunk.Blocks.SetID(x, y, z, BiomeList.biomes[biomeIndex].getBlockID(height - y, x + (chunk.X * 16), z + (chunk.Z * 16)));
+                            int caveID = currentCaveMap.getCaveBlock(x + (chunk.X * 16), y-shift, z + (chunk.Z * 16));
+                            if(caveID >=0)
+                                chunk.Blocks.SetID(x, y, z, caveID);
                         }
                     }
                     // Create Oceans and lakes
@@ -248,17 +248,12 @@ namespace DwarvenRealms
                         if (y >= chunk.Blocks.YDim) break;
                         chunk.Blocks.SetID(x, y, z, BlockType.STATIONARY_WATER);
                     }
-                    //hollow out caves
-                    if (caveFloor < caveCeiling)
-                        for (int y = caveFloor - 1; y < caveCeiling; y++)
-                        {
-                            if (y < 2) continue;
-                            if (y >= chunk.Blocks.YDim) break;
-                            if (y == caveFloor - 1)
-                                chunk.Blocks.SetID(x, y, z, BlockType.MYCELIUM);
-                            else
-                                chunk.Blocks.SetID(x, y, z, BlockType.AIR);
-                        }
+                    // Create the rest, according to biome
+                    for (int y = 2; y < height; y++)
+                    {
+                        if (y >= chunk.Blocks.YDim) break;
+                        chunk.Blocks.SetID(x, y, z, BiomeList.biomes[biomeIndex].getBlockID(height - y, x + (chunk.X * 16), z + (chunk.Z * 16)));
+                    }
                 }
             }
         }
