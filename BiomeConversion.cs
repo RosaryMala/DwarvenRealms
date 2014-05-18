@@ -88,21 +88,9 @@ namespace DwarvenRealms
                 return layer4ID[(int)Math.Floor(rando)];
             }
         }
-        public static bool operator ==(Color a, BiomeConversion b)
+        public bool matches(Color a)
         {
-            return a.R == b.colorKey.R && a.G == b.colorKey.G && a.B == b.colorKey.B;
-        }
-        public static bool operator ==(BiomeConversion b, Color a)
-        {
-            return a.R == b.colorKey.R && a.G == b.colorKey.G && a.B == b.colorKey.B;
-        }
-        public static bool operator !=(Color a, BiomeConversion b)
-        {
-            return a.R != b.colorKey.R || a.G != b.colorKey.G || a.B != b.colorKey.B;
-        }
-        public static bool operator !=(BiomeConversion b, Color a)
-        {
-            return a.R != b.colorKey.R || a.G != b.colorKey.G || a.B != b.colorKey.B;
+            return a.R == colorKey.R && a.G == colorKey.G && a.B == colorKey.B;
         }
     }
 }

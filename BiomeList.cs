@@ -57,7 +57,7 @@ namespace DwarvenRealms
         {
             for (int i = 0; i < biomes.Length; i++)
             {
-                if (biomes[i] == input)
+                if (biomes[i].matches(input))
                     return i;
             }
             return 0;
