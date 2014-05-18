@@ -133,6 +133,12 @@ namespace DwarvenRealms
         {
             return getInterpolatedValue(elevationMap, interpolationChoice, x, y);
         }
+        public double getSmoothedElevation(double x, double y)
+        {
+            return getInterpolatedValue(smoothedElevationMap, interpolationChoice, x, y);
+        }
+
+        
 
         public static double getInterpolatedValue(int[,] array, InterpolationChoice type, double x, double y)
         {
@@ -241,34 +247,6 @@ namespace DwarvenRealms
             if (y > grid.GetUpperBound(1))
                 y = grid.GetUpperBound(1);
             return grid[x, y];
-        }
-
-        double getOpenCave(double x, double y, double scale, double percentage)
-        {
-            double caveness = Noise.Generate((float)(x / scale), (float)(y / scale));
-            caveness = ((caveness + 1.0) / 2) * 100;
-            caveness -= (100 - percentage);
-            caveness /= percentage;
-            if (caveness < 0)
-                caveness = 0;
-            return caveness;
-        }
-
-        public int getCaveCeiling(double x, double y)
-        {
-            double height = getOpenCave(x, y, Settings.Default.caveScale, Settings.Default.cavePercentage);
-            height *= Settings.Default.caveHeight;
-            height *= 2.0 / 3.0;
-            height += (getInterpolatedValue(smoothedElevationMap, interpolationChoice, x, y) * 0.6);
-            return (int)(height + 0.5);
-        }
-        public int getCaveFloor(double x, double y)
-        {
-            double height = getOpenCave(x, y, Settings.Default.caveScale, Settings.Default.cavePercentage);
-            height *= Settings.Default.caveHeight;
-            height *= -1.0 / 3.0;
-            height += (getInterpolatedValue(smoothedElevationMap, interpolationChoice, x, y) * 0.6);
-            return (int)(height + 0.5);
         }
 
         int getFuzzyCoords(int[,] grid, double x, double y)

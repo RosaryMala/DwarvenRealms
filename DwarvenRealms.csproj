@@ -95,6 +95,7 @@
     <Compile Include="BiomeID.cs" />
     <Compile Include="BiomeList.cs" />
     <Compile Include="BiomeConversion.cs" />
+    <Compile Include="CaveThing.cs" />
     <Compile Include="DwarfWorldMap.cs" />
     <Compile Include="GaussianBlur.cs" />
     <Compile Include="Interpolate.cs" />

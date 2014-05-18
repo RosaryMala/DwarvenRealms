@@ -12,6 +12,7 @@ namespace DwarvenRealms
 
         NbtWorld currentWorld;
         DwarfWorldMap currentDwarfMap;
+        CaveThing currentCaveMap;
 
         int maxHeight = -9999;
         int minHeight = 9999;
@@ -66,6 +67,7 @@ namespace DwarvenRealms
             currentDwarfMap.loadElevationMap(Settings.Default.elevationMapPath);
             currentDwarfMap.loadWaterMap(Settings.Default.elevationWaterMapPath);
             currentDwarfMap.loadBiomeMap(Settings.Default.biomeMapPath);
+            currentCaveMap = new CaveThing(currentDwarfMap);
         }
 
         public void initializeMinecraftWorld()
@@ -180,8 +182,8 @@ namespace DwarvenRealms
                     double mux = (mapXMax - mapXMin) * x / 16.0 + mapXMin;
                     double muy = (mapYMax - mapYMin) * z / 16.0 + mapYMin;
                     int height = (int)currentDwarfMap.getElevation(mux, muy) + shift;
-                    int caveCeiling = currentDwarfMap.getCaveCeiling(mux, muy) + shift;
-                    int caveFloor = currentDwarfMap.getCaveFloor(mux, muy) + shift;
+                    int caveCeiling = currentCaveMap.getCaveCeiling(mux, muy) + shift;
+                    int caveFloor = currentCaveMap.getCaveFloor(mux, muy) + shift;
                     int waterLevel = currentDwarfMap.getWaterbodyLevel((int)Math.Floor(mux + 0.5), (int)Math.Floor(muy + 0.5)) + shift;
                     int riverLevel = currentDwarfMap.getRiverLevel((int)Math.Floor(mux + 0.5), (int)Math.Floor(muy + 0.5)) + shift;
                     if (height > maxHeight) maxHeight = height;
